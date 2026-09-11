@@ -2,14 +2,15 @@
 """Dựng một face Times New Roman đã được tô dày nét sẵn, để tái lập đúng kiểu
 chữ đậm của bản CV gốc.
 
-Bản CV gốc (Mai-The-Toan-TopCV.vn-010626.131333.pdf) KHÔNG nhúng face Bold nào:
-cả 7 subset trong đó đều là TimesNewRomanPSMT với StemV=61.03. Chữ đậm ở đó là
-face Regular được trình kết xuất tô dày nét, nên vẫn giữ nguyên bề rộng chữ của
-Regular. Dùng `font-weight: 700` thì Chromium lấy face Bold thật, rộng hơn ~6%
-và nét lại mảnh hơn 8-12% so với bản gốc.
+Bản CV gốc (Mai-The-Toan-TopCV.vn-010626.131333.pdf) vẽ phần nhìn thấy bằng
+đường vector, còn lớp text thì đặt trong suốt (ExtGState /G9 có ca=0) chỉ để
+máy đọc. Nhờ vậy nó tô nét dày bao nhiêu cũng được mà bề rộng chữ vẫn y hệt
+Times Regular. Chromium không làm được kiểu đó, nên ta đẩy phần tô dày vào
+chính file font.
 
-Script này đọc times.ttf của Windows, cắt bớt chỉ giữ các ký tự CV dùng tới, rồi
-tô dày từng chữ, và ghi ra một file WOFF2 (~19KB) cho bản build nhúng vào.
+Dùng `font-weight: 700` thì Chromium lấy face Bold thật: rộng hơn bản gốc ~6%.
+Dùng `text-shadow`/`-webkit-text-stroke` thì Chromium vẽ chữ nhiều lần, text
+trích xuất bị nhân bản và hệ thống lọc hồ sơ đọc CV thành rác.
 
 KHÔNG commit file WOFF2 sinh ra: Times New Roman đi kèm giấy phép Windows, phát
 hành lại file font (kể cả bản đã sửa) là vi phạm. Nhúng một subset vào chính file
@@ -20,22 +21,18 @@ import os
 import sys
 
 from fontTools import subset
-from fontTools.misc.transform import Offset
-from fontTools.pens.recordingPen import DecomposingRecordingPen
-from fontTools.pens.transformPen import TransformPen
-from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.ttLib import TTFont
 
 # Nguồn font: bản Times New Roman đi kèm Windows
 SRC_FONT = os.path.join(os.environ.get('WINDIR', r'C:\Windows'), 'Fonts', 'times.ttf')
 
-# Bán kính tô dày, tính theo em. 0.017 là giá trị đo khớp bản gốc: nét lệch
-# +0.1% ở tiêu đề mục, -0.5% ở tên trường, +2.8% ở tên (đo trên ảnh 600dpi).
-DEFAULT_STRENGTH = 0.017
+# Bán kính nong viền, tính theo em. 0.020 là giá trị đo khớp bản gốc: lượng mực
+# lệch +0.6% (tên), +1.8% (tiêu đề mục), -0.3% (tên trường) khi đo ở 96dpi.
+DEFAULT_STRENGTH = 0.020
 
-# Số hướng tô quanh vòng tròn. 8 hướng để lại khía răng cưa thấy được ở cỡ chữ
-# tên (19.2px); 16 hướng thì viền đã mượt mà file vẫn nhỏ.
-DEFAULT_DIRECTIONS = 16
+# Chặn gai nhọn: ở góc càng nhọn thì điểm phải dịch càng xa mới giữ được bề dày
+# nét. Không chặn thì đầu nhọn của A, V, W bắn ra thành gai dài.
+MIN_COS_HALF = 0.35
 
 
 def collect_chars(resume_path):
@@ -53,41 +50,118 @@ def collect_chars(resume_path):
     return {c for c in chars if c.isprintable()}
 
 
-def embolden_glyph(glyph_set, name, offsets):
-    """Tô dày một chữ bằng cách chồng nhiều bản sao đường viền lệch nhau.
+def signed_area(points):
+    """Tính diện tích có dấu của một đường khép kín (ngược chiều kim đồng hồ là dương).
 
-    Quy tắc tô nonzero của TrueType làm cho hợp của các bản sao viền ngoài =
-    viền được nong rộng ra, còn giao của các bản sao viền lỗ (ruột chữ o, p...)
-    = lỗ bị co lại. Đúng bằng định nghĩa của tô đậm.
-
-    Composite (chữ có dấu như ế, ồ) được trả về đường viền thật trước khi tô,
-    nếu không phần dấu sẽ bị tô hai lần.
-
-    :param glyph_set: glyphSet của TTFont, dùng để giải nén composite
-    :param name: tên chữ trong font
-    :param offsets: danh sách (dx, dy) tính theo đơn vị font
-    :return: đối tượng glyph mới, hoặc None nếu chữ rỗng (dấu cách)
+    :param points: danh sách toạ độ (x, y)
+    :return: diện tích có dấu
     """
-    rec = DecomposingRecordingPen(glyph_set)
-    glyph_set[name].draw(rec)
-    if not rec.value:
-        return None
-    pen = TTGlyphPen(None)
-    for dx, dy in offsets:
-        rec.replay(TransformPen(pen, Offset(dx, dy)))
-    return pen.glyph()
+    total = 0.0
+    n = len(points)
+    for i in range(n):
+        x0, y0 = points[i]
+        x1, y1 = points[(i + 1) % n]
+        total += x0 * y1 - x1 * y0
+    return total / 2.0
 
 
-def build(out_path, chars, strength=DEFAULT_STRENGTH, directions=DEFAULT_DIRECTIONS):
+def offset_contour(points, radius, direction):
+    """Đẩy mọi điểm của một đường khép kín ra xa theo pháp tuyến phân giác.
+
+    Đây là cách nong viền thật sự, khác hẳn với việc chồng nhiều bản sao lệch
+    nhau. Chồng bản sao làm bộ tô cộng dồn độ phủ ở pixel viền rồi bão hoà
+    thành đen đặc, nên ở cỡ màn hình chữ đậm hơn bản gốc tới 24-35% dù đo ở
+    600dpi thì vẫn khớp; nó cũng làm dấu mũ và dấu sắc của chữ "ế" dính thành
+    một cục đen.
+
+    :param points: danh sách toạ độ (x, y) của đường
+    :param radius: khoảng dịch, tính theo đơn vị font
+    :param direction: +1 hoặc -1, chọn chiều pháp tuyến
+    :return: danh sách toạ độ mới
+    """
+    n = len(points)
+    result = []
+    for i in range(n):
+        p = points[i]
+        # Bỏ qua các điểm trùng vị trí, nếu không hướng đi sẽ bằng 0
+        prev = p
+        k = 1
+        while prev == p and k <= n:
+            prev = points[(i - k) % n]
+            k += 1
+        nxt = p
+        k = 1
+        while nxt == p and k <= n:
+            nxt = points[(i + k) % n]
+            k += 1
+
+        vin = (p[0] - prev[0], p[1] - prev[1])
+        vout = (nxt[0] - p[0], nxt[1] - p[1])
+        lin = math.hypot(*vin) or 1.0
+        lout = math.hypot(*vout) or 1.0
+        vin = (vin[0] / lin, vin[1] / lin)
+        vout = (vout[0] / lout, vout[1] / lout)
+
+        nin = (direction * vin[1], -direction * vin[0])
+        nout = (direction * vout[1], -direction * vout[0])
+        bx, by = nin[0] + nout[0], nin[1] + nout[1]
+        length = math.hypot(bx, by)
+        if length < 1e-9:
+            # Quay đầu 180 độ: không có phân giác, lấy tạm pháp tuyến cạnh vào
+            bx, by, length = nin[0], nin[1], 1.0
+        bx, by = bx / length, by / length
+
+        cos_half = max(bx * nin[0] + by * nin[1], MIN_COS_HALF)
+        step = radius / cos_half
+        result.append((p[0] + bx * step, p[1] + by * step))
+    return result
+
+
+def embolden(font, radius):
+    """Tô dày mọi chữ đơn trong font.
+
+    Chữ composite (chữ có dấu như ế, ồ) được giữ nguyên dạng composite: thành
+    phần của nó đã được tô rồi, nên dấu mũ và dấu sắc vẫn cách nhau đúng như
+    thiết kế thay vì dính vào nhau.
+
+    :param font: đối tượng TTFont đã cắt subset
+    :param radius: bán kính nong viền, tính theo đơn vị font
+    """
+    glyf = font['glyf']
+    for name in font.getGlyphOrder():
+        glyph = glyf[name]
+        glyph.expand(glyf)
+        if getattr(glyph, 'numberOfContours', 0) <= 0:
+            continue
+        coords = glyph.coordinates
+        moved = []
+        start = 0
+        for end in glyph.endPtsOfContours:
+            points = [tuple(coords[i]) for i in range(start, end + 1)]
+            # Chọn chiều dịch sao cho diện tích có dấu GIẢM: viền ngoài (chiều
+            # kim đồng hồ) nở ra, còn viền lỗ (ngược chiều) thì co lại.
+            plus = offset_contour(points, radius, +1)
+            minus = offset_contour(points, radius, -1)
+            moved += plus if signed_area(plus) < signed_area(minus) else minus
+            start = end + 1
+        for i, (x, y) in enumerate(moved):
+            coords[i] = (int(round(x)), int(round(y)))
+        glyph.recalcBounds(glyf)
+
+
+def build(out_path, chars, strength=DEFAULT_STRENGTH):
     """Dựng file font WOFF2 đã tô đậm và ghi ra đĩa.
 
     Bảng hmtx được giữ nguyên: bản gốc có bề rộng chữ y hệt face Regular, nên
     tô dày chỉ được làm dày nét chứ không được nới bước chữ.
 
+    Lệnh hinting bị bỏ: toạ độ điểm đã đổi nên các lệnh cũ không còn đúng. Bản
+    gốc cũng không dùng hinting để hiển thị vì phần nhìn thấy của nó là đường
+    vector, không phải chữ.
+
     :param out_path: đường dẫn file .woff2 cần ghi
     :param chars: tập ký tự cần giữ
-    :param strength: bán kính tô dày theo em
-    :param directions: số hướng tô quanh vòng tròn
+    :param strength: bán kính nong viền theo em
     :return: đường dẫn file đã ghi
     """
     font = TTFont(SRC_FONT)
@@ -98,20 +172,7 @@ def build(out_path, chars, strength=DEFAULT_STRENGTH, directions=DEFAULT_DIRECTI
     subsetter.populate(unicodes=[ord(c) for c in chars])
     subsetter.subset(font)
 
-    upem = font['head'].unitsPerEm
-    radius = strength * upem
-    offsets = [(radius * math.cos(2 * math.pi * k / directions),
-                radius * math.sin(2 * math.pi * k / directions))
-               for k in range(directions)]
-
-    glyf = font['glyf']
-    glyph_set = font.getGlyphSet()
-    for name in font.getGlyphOrder():
-        glyph = embolden_glyph(glyph_set, name, offsets)
-        if glyph is None:
-            continue
-        glyph.recalcBounds(glyf)
-        glyf[name] = glyph
+    embolden(font, strength * font['head'].unitsPerEm)
 
     # Tổng kiểm không còn đúng sau khi sửa glyf; trình duyệt không kiểm tra giá
     # trị này nên đặt 0 thay vì tính lại.

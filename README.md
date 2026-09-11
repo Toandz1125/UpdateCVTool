@@ -147,23 +147,42 @@ ngang iframe và ngắt dòng khác hẳn file PDF.
 
 ### Chữ đậm — tự dựng font, không dùng face Bold
 
-Bản gốc **không nhúng face Bold nào**: cả 7 subset đều là `TimesNewRomanPSMT`
-với `StemV=61.03`. Chữ đậm ở đó là face Regular được trình kết xuất tô dày nét,
-nên **giữ nguyên bề rộng chữ của Regular**.
+**Bản gốc làm thế nào:** nó vẽ phần nhìn thấy bằng **đường vector**, còn lớp
+text thì đặt **trong suốt** (`ExtGState /G9` có `ca: 0`) chỉ để máy đọc. Kiểm
+chứng: chữ "C" trong subset chữ đậm của bản gốc có bề rộng 1366, 37 điểm, bbox
+`(74,-31,1295,1387)` — trùng từng con số với `times.ttf` Regular, và cả 7 subset
+đều còn nguyên bảng hinting `cvt`/`fpgm`/`prep`. Tức là đường viền chưa hề bị
+sửa; nó tô nét dày lúc vẽ vector. Nhờ vậy nét dày bao nhiêu tuỳ ý mà bề rộng
+chữ vẫn y hệt Regular. Chromium không làm được kiểu đó, nên ta đẩy phần tô dày
+vào chính file font.
 
-`tools/build-faux-bold-font.py` tái lập đúng như vậy: đọc `C:\Windows\Fonts\times.ttf`,
-cắt còn các ký tự CV dùng tới, rồi tô dày từng chữ bằng cách chồng 16 bản sao
-đường viền lệch nhau 0.017em quanh một vòng tròn. Quy tắc tô nonzero làm hợp của
-các bản sao viền ngoài = viền nong rộng ra, còn giao của các bản sao viền lỗ =
-lỗ co lại — đúng bằng định nghĩa tô đậm. Bảng `hmtx` giữ nguyên nên bề rộng chữ
-không đổi. Kết quả là một file WOFF2 ~19KB.
+`tools/build-faux-bold-font.py` đọc `C:\Windows\Fonts\times.ttf`, cắt còn các ký tự
+CV dùng tới, rồi **nong đường viền** ra 0.020em: mỗi điểm bị đẩy ra xa theo pháp
+tuyến phân giác của hai cạnh kề. Bảng `hmtx` giữ nguyên nên bề rộng chữ không
+đổi. Kết quả là một file WOFF2 ~9KB.
 
-| Cách | Nét chữ so với gốc | Bề rộng | Text trích xuất |
-|---|---|---|---|
-| **Font tô đậm sẵn (đang dùng)** | **-0.5% … +2.8%** | **khớp** | **1 bản, sạch** |
-| `font-weight: 700` (face Bold thật) | mảnh hơn 8–12% | rộng hơn ~6% | 1 bản, sạch |
-| `text-shadow` 24 bản sao | khớp | khớp | **25 bản** |
-| `-webkit-text-stroke` | mảnh hơn 24–28% | khớp | **2 bản** |
+Hai chi tiết phải làm đúng, nếu không sẽ hỏng ở cỡ màn hình:
+
+* **Nong viền thật, đừng chồng nhiều bản sao lệch nhau.** Chồng bản sao cũng cho
+  ra hình đúng và đo ở 600dpi vẫn khớp, nhưng bộ tô cộng dồn độ phủ ở pixel viền
+  rồi bão hoà thành đen đặc: ở 96dpi chữ đậm hơn bản gốc **24-35%**, nhìn nhoè
+  và vỡ. Nong viền thật thì 96dpi và 600dpi bám nhau.
+* **Giữ chữ có dấu ở dạng composite.** Thành phần của nó đã được tô rồi, nên dấu
+  mũ và dấu sắc của "ế" vẫn cách nhau đúng như thiết kế. Giải nén composite ra
+  rồi mới tô thì hai dấu dính thành một cục đen.
+* **Chặn gai nhọn** (`MIN_COS_HALF`): ở góc càng nhọn điểm phải dịch càng xa mới
+  giữ được bề dày nét, không chặn thì đầu nhọn của A, V, W bắn ra thành gai.
+
+Lệnh hinting bị bỏ vì toạ độ điểm đã đổi. Không mất mát gì: bản gốc cũng không
+dùng hinting để hiển thị.
+
+| Cách | Nét chữ (600dpi) | Lượng mực (96dpi) | Bề rộng | Text trích xuất |
+|---|---|---|---|---|
+| **Nong viền 0.020em (đang dùng)** | **-1.3% … -2.6%** | **-0.3% … +1.8%** | **khớp** | **1 bản, sạch** |
+| Chồng 16 bản sao 0.017em | -0.5% … +2.8% | **+24% … +35%** | khớp | 1 bản, sạch |
+| `font-weight: 700` (face Bold thật) | -8% … -12% | — | rộng hơn ~6% | 1 bản, sạch |
+| `text-shadow` 24 bản sao | khớp | — | khớp | **25 bản** |
+| `-webkit-text-stroke` | -24% … -28% | — | khớp | **2 bản** |
 
 Hai cách cuối đều khiến Chromium vẽ chữ nhiều lần. Mức thiệt hại tuỳ thư viện
 đọc PDF: `pdfium` (Chrome), `poppler/pdftotext` và `PDFBox` có lọc trùng nên đọc
@@ -180,10 +199,9 @@ Cần `python` + `pip install fonttools brotli` và máy Windows có `times.ttf`
 Thiếu thứ nào cũng không làm hỏng build — chỉ là chữ đậm rơi về face Bold thật.
 Dựng riêng bằng `npm run build:font`.
 
-> **Không commit `output/times-faux-bold.woff2`.** Times New Roman đi kèm giấy
-> phép Windows; phát hành lại file font, kể cả bản đã sửa và cắt gọn, là vi
-> phạm. Nhúng subset vào chính file PDF thì được phép — bản gốc của TopCV cũng
-> làm đúng như vậy. `.gitignore` đã chặn sẵn `output/*.woff2`.
+**Cách tự kiểm tra sau khi đổi tham số tô đậm:** phải đo lượng mực ở **cả 96dpi
+lẫn 600dpi**. Chỉ đo ở độ phân giải in thì không phát hiện được lỗi bão hoà độ
+phủ, mà đó lại đúng là thứ người dùng nhìn thấy trên màn hình.
 
 **Sau mỗi lần đổi CSS liên quan tới chữ đậm/nghiêng, phải kiểm tra lại text trích
 xuất được:** `pdftotext output/Mai-The-Toan-CV.pdf -` — nếu thấy ký tự bị nhân đôi
