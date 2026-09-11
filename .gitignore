@@ -16,3 +16,9 @@ output/*.png
 # Font Times đã tô đậm: dựng lại được bằng tools/build-faux-bold-font.py.
 # KHÔNG commit - phát hành lại file font Windows là vi phạm giấy phép.
 output/*.woff2
+
+# Bytecode Python sinh ra khi chạy tools/
+__pycache__/
+
+# File đo đạc tạm thời khi đối chiếu với bản CV gốc
+_measure.mjs
