@@ -86,7 +86,7 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 
 | Thông số | Giá trị | Ghi chú |
 |---|---|---|
-| Lề trang (`@page`) | `4mm 5mm 0mm 5mm` | Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng |
+| Lề trang (`@page`) | `2.3mm 5mm 0mm 5mm` | Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng |
 | Giãn dòng (`line-height`) | `1.43` | Đo từ bản gốc: hai dòng đoạn objective cách nhau 3.94mm. Để 1.34 thì chữ trong mục bị nén và phải bù bằng khoảng hở lớn giữa các khối — sai bố cục |
 | Bước hàng SKILLS | `padding: 7.4px 0` | Bước hàng bản gốc 8.06mm |
 | Cỡ chữ body | `7.8pt` | Để 8.8pt thì giá trị cột SKILLS bị xuống dòng, lệch hẳn nhịp trang |
@@ -103,14 +103,14 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Lưới SKILLS | `margin-top: -5px` | Để hàng skill đầu tiên vừa đủ nằm lại cuối trang 1 |
 | Khoảng cách trong header | tên `margin-bottom: 9.2px`, chức danh `13px`, header `45.3px` | Bản gốc giãn đều 4.78mm giữa tên–chức danh và chức danh–liên hệ, rồi 11.68mm trước mục đầu tiên. Đừng dồn hết vào `margin-bottom` của header |
 | Icon liên hệ | `14px` | Khớp chiều cao glyph FontAwesome 10.5pt của bản gốc |
-| Kẻ ngăn hàng SKILLS | `border-top` ở hàng SAU | Không dùng `border-bottom`: hàng cuối trang 1 sẽ sinh nét thừa mà bản gốc không có |
+| Kẻ ngăn hàng SKILLS | phần tử `<i class="skill-sep">` trong hàng | **Không dùng `border`**: border của hàng mở đầu một trang mới bị Chromium bỏ qua, nên nét ở đầu trang 2 sẽ mất. Phần tử nội dung thì luôn được vẽ |
 
 Sai số hiện tại (so từng dòng chữ một, raster 400dpi):
 
 | | Số dòng | Lệch trung bình | Lệch lớn nhất |
 |---|---|---|---|
-| Trang 1 | 52 | **0.28mm** | **0.76mm** |
-| Trang 2 | 18 | 2.41mm | 7.11mm |
+| Trang 1 | 52 | **0.22mm** | **0.64mm** (100% dưới 1mm) |
+| Trang 2 | 18 | 2.68mm | 8.45mm |
 
 Trang 1 khớp từng dòng. Trang 2 lệch nhiều hơn **vì dữ liệu khác bản gốc**:
 `skills.tools` trong `data/resume.yaml` có thêm 7 mục (Windows Terminal,
@@ -150,18 +150,6 @@ vệt mờ, nhìn nhạt hơn bản gốc dù cùng lượng mực. Face Bold th
 **Sau mỗi lần đổi CSS liên quan tới chữ đậm/nghiêng, phải kiểm tra lại text trích
 xuất được:** `pdftotext output/Mai-The-Toan-CV.pdf -` — nếu thấy ký tự bị nhân đôi
 thì cách làm đậm đó đang phá CV về mặt ATS, phải đổi cách khác.
-
-### Còn khác bản gốc
-
-Bản gốc để hàng skill đầu tiên tràn qua ranh giới trang: chữ ở cuối trang 1 còn
-nét gạch chân rơi xuống đầu trang 2 (y = 2.26mm, phía trên cả lề trên). Chromium
-coi hàng grid/table là khối không cắt được nên không tái tạo được. Cách hiện tại
-bỏ hẳn nét đó thay vì sinh nét thừa ở đáy trang 1 — sai lệch còn lại đúng một
-nét xám 1px.
-
-**Cảnh báo khi sửa spacing:** vị trí đường kẻ SKILLS phải ở ≤ 286.5mm, nếu không
-hàng "Programming Languages" bị đẩy sang trang 2 và lệch hẳn so với bản gốc. Chỉ
-cần thêm 1px padding cho `.project-item` là đủ để tụt.
 
 ## 🔒 Lưu ý Kỹ thuật về Nền tảng
 

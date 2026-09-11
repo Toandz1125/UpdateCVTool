@@ -2,7 +2,7 @@
    2.6mm dưới). Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng. */
 @page {
   size: A4 portrait;
-  margin: 4mm 5mm 0mm 5mm;
+  margin: 2.3mm 5mm 0mm 5mm;
 }
 
 * {
@@ -31,7 +31,8 @@ body {
    ========================================================================== */
 .cv-header {
   text-align: center;
-  margin-bottom: 40.3px;
+  margin-top: 4.3px;
+  margin-bottom: 42.4px;
 }
 
 .cv-name {
@@ -271,7 +272,16 @@ body {
 }
 
 .skill-row + .skill-row {
-  border-top: 1px solid #e0e0e0;
+  padding-top: 0;
+}
+
+/* Nét ngăn hàng là phần tử nội dung, không phải border: border của hàng mở đầu
+   trang mới bị Chromium bỏ qua, còn phần tử nội dung thì luôn được vẽ. */
+.skill-sep {
+  grid-column: 1 / -1;
+  height: 1px;
+  background: #e0e0e0;
+  margin-bottom: 7.4px;
 }
 
 .skill-name {
