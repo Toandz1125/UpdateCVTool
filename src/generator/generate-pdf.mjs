@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { load } from 'js-yaml';
 import { chromium } from 'playwright';
+import { ensureFauxBoldFont, fauxBoldCss } from './faux-bold-font.mjs';
 
 // Bám theo vị trí file nguồn thay vì cwd: chạy từ thư mục nào cũng ra cùng kết quả
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -286,8 +287,16 @@ export async function buildPdf() {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
-  // Copy CSS to output dir for local preview
-  fs.copyFileSync(TEMPLATE_CSS, path.join(OUTPUT_DIR, 'cv-style.css'));
+  // Chữ đậm của bản gốc là face Regular được tô dày nét, không phải face Bold.
+  // Nếu dựng được font tô đậm thì nối thêm khối CSS dùng nó; không dựng được
+  // (thiếu Python/fontTools/times.ttf) thì giữ nguyên face Bold thật.
+  const hasFauxBold = ensureFauxBoldFont(ROOT_DIR, OUTPUT_DIR, DATA_FILE);
+  const css = fs.readFileSync(TEMPLATE_CSS, 'utf8') + (hasFauxBold ? fauxBoldCss() : '');
+  console.log(hasFauxBold
+    ? '[PDF Generator] Chữ đậm: dùng font Times tô đậm sẵn (khớp bản gốc)'
+    : '[PDF Generator] Chữ đậm: dùng face Bold thật (không dựng được font tô đậm)');
+
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'cv-style.css'), css, 'utf8');
   fs.writeFileSync(TEMP_HTML, renderedHtml, 'utf8');
 
   console.log('[PDF Generator] Launching Playwright Chromium...');

@@ -20,6 +20,30 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ==========================================================================
+   CHỮ ĐẬM
+   Bản gốc KHÔNG nhúng face Bold nào - cả 7 subset đều là TimesNewRomanPSMT
+   với StemV=61.03. Chữ đậm ở đó là face Regular được trình kết xuất tô dày
+   nét, nên vẫn giữ nguyên bề rộng chữ của Regular.
+
+   Luật dưới đây là phương án DỰ PHÒNG: face Bold thật rộng hơn bản gốc ~6% và
+   nét mảnh hơn 8-12%. Khi build dựng được output/times-faux-bold.woff2, nó nối
+   thêm một khối ghi đè ở cuối file CSS sinh ra để dùng font đó thay thế.
+   Xem tools/build-faux-bold-font.py và README, mục "Chữ đậm".
+
+   Đừng thử -webkit-text-stroke hay text-shadow: cả hai đều khiến Chromium vẽ
+   chữ nhiều lần nên text trích xuất bị nhân bản (pypdf đọc tên lặp 25 lần),
+   hệ thống lọc hồ sơ sẽ đọc CV thành rác.
+   ========================================================================== */
+.cv-name,
+.section-title,
+.project-sub,
+.pub-author-first,
+.edu-item .item-title,
+.project-item .item-title {
+  font-weight: 700;
+}
+
 .cv-container {
   width: 100%;
   max-width: 100%;
@@ -53,7 +77,6 @@ body {
 
 .cv-name {
   font-size: 14.4pt;
-  font-weight: 700;
   color: #000000;
   margin-bottom: 6.0px;
 }
@@ -108,7 +131,6 @@ body {
    và tổng chiều cao khối giữ nguyên vị trí cũ. */
 .section-title {
   font-size: 9.6pt;
-  font-weight: 700;
   color: #000000;
   text-transform: uppercase;
   border-bottom: 1px solid #000000;
@@ -147,7 +169,6 @@ body {
 }
 
 .item-title {
-  font-weight: 700;
   color: #000000;
 }
 
@@ -187,9 +208,7 @@ body {
   color: #000000;
 }
 
-.pub-author-first {
-  font-weight: 700;
-}
+/* Tác giả đứng đầu được tô đậm ở khối CHỮ ĐẬM phía trên */
 
 /* Bản gốc cũng không nhúng face Italic — chữ nghiêng là do nghiêng cơ học
    chính face regular. Dùng skewX thay font-style để không kéo thêm face
@@ -241,7 +260,6 @@ body {
 
 .project-sub {
   font-size: 7.8pt;
-  font-weight: 700;
   color: #000000;
   text-transform: uppercase;
   margin-top: 11.5px;
@@ -355,10 +373,6 @@ body {
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 8px;
   margin-bottom: 8px;
-}
-
-.award-item .item-title {
-  font-weight: 400;
 }
 
 .simple-list {

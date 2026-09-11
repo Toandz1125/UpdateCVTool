@@ -13,3 +13,6 @@ data/backups/
 output/preview.html
 output/cv-style.css
 output/*.png
+# Font Times đã tô đậm: dựng lại được bằng tools/build-faux-bold-font.py.
+# KHÔNG commit - phát hành lại file font Windows là vi phạm giấy phép.
+output/*.woff2

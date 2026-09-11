@@ -102,7 +102,7 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Dấu chấm đầu dòng | `::before { content: "•"; left: -7.05px }` | **Không dùng marker mặc định**: Chromium vẽ hình tròn rộng 0.80mm đặt lệch trái 1.66mm. Bản gốc dùng đúng ký tự "•" của Times, rộng 0.68mm |
 | Nhãn "Tech Stack:" / "Github:" | **không in đậm** | Bản gốc chỉ in đậm: tên, 8 tiêu đề mục, tên trường, tác giả đầu, 4 tên dự án, 4 dòng phụ dự án — đúng 19 chỗ, không hơn |
 | Tiêu đề giải thưởng, nhãn "Role:" | không in đậm | |
-| Chữ đậm | face Bold thật (`font-weight: 700`) | Xem mục "Chữ đậm" bên dưới |
+| Chữ đậm | font Times tô đậm sẵn, dựng lúc build | **Không dùng face Bold thật** (rộng hơn ~6%), cũng không dùng `text-shadow`/`-webkit-text-stroke` (nhân bản text). Xem mục "Chữ đậm" bên dưới |
 | Chữ nghiêng | `transform: skewX(-12deg)` + `width: fit-content` | Bản gốc không nhúng face Italic. **Bắt buộc có `width: fit-content`** — xem mục dưới |
 | Lưới SKILLS | `margin-top: -8px`, `margin-bottom: 17px` | -8px để hàng skill đầu vừa đủ nằm lại trang 1 (ngưỡng đo được là -7px); 17px vì khoảng cách sau hàng cuối rộng hơn khoảng cách giữa hai hàng |
 | Khoảng sau danh sách chứng chỉ | `.simple-list { margin-bottom: 17px }` | Cùng lý do với lưới SKILLS: `.simple-list-item` tự lo thì hụt 5px |
@@ -124,7 +124,7 @@ Sai số hiện tại (so từng dòng chữ, toạ độ lấy từ hộp bao k
 
 | | Lệch ngang trung bình | Lệch ngang lớn nhất | Lệch dọc trung bình | Lệch dọc lớn nhất |
 |---|---|---|---|---|
-| Cả 2 trang (62 dòng) | **0.04mm** | **0.84mm** | **0.38mm** | **0.89mm** |
+| Cả 2 trang (62 dòng) | **0.02mm** | **0.27mm** | **0.38mm** | **0.86mm** |
 
 Đo với `skills.tools` rút còn 1 dòng để loại ảnh hưởng của dữ liệu. Với dữ liệu
 thật, `skills.tools` trong `data/resume.yaml` có thêm 7 mục (Windows Terminal,
@@ -145,23 +145,45 @@ Khối `@media screen` ở cuối `cv-style.css` ép khung xem trước trên da
 đúng khổ A4 (210mm), kể cả 4px thụt chữ. Không có nó thì preview giãn hết bề
 ngang iframe và ngắt dòng khác hẳn file PDF.
 
-### Chữ đậm — đã thử 3 cách, chọn cách ít dở nhất
+### Chữ đậm — tự dựng font, không dùng face Bold
 
-Bản gốc **không nhúng face Bold nào** — cả 7 subset đều là `TimesNewRomanPSMT`
-với `StemV=61.03`; chữ đậm là do trình kết xuất tô dày nét trên chính face đó.
-Không tái lập được trọn vẹn bằng CSS:
+Bản gốc **không nhúng face Bold nào**: cả 7 subset đều là `TimesNewRomanPSMT`
+với `StemV=61.03`. Chữ đậm ở đó là face Regular được trình kết xuất tô dày nét,
+nên **giữ nguyên bề rộng chữ của Regular**.
 
-| Cách | Nét chữ so với gốc | Bề rộng | ATS đọc được |
+`tools/build-faux-bold-font.py` tái lập đúng như vậy: đọc `C:\Windows\Fonts\times.ttf`,
+cắt còn các ký tự CV dùng tới, rồi tô dày từng chữ bằng cách chồng 16 bản sao
+đường viền lệch nhau 0.017em quanh một vòng tròn. Quy tắc tô nonzero làm hợp của
+các bản sao viền ngoài = viền nong rộng ra, còn giao của các bản sao viền lỗ =
+lỗ co lại — đúng bằng định nghĩa tô đậm. Bảng `hmtx` giữ nguyên nên bề rộng chữ
+không đổi. Kết quả là một file WOFF2 ~19KB.
+
+| Cách | Nét chữ so với gốc | Bề rộng | Text trích xuất |
 |---|---|---|---|
-| `font-weight: 700` (đang dùng) | mảnh hơn 8–12% | rộng hơn ~6% | có |
-| `-webkit-text-stroke: 0.16px` trên face Regular | mảnh hơn 24–28% | khớp chính xác | **KHÔNG** |
-| `text-shadow` | nhoè, có bóng đôi | khớp | có |
+| **Font tô đậm sẵn (đang dùng)** | **-0.5% … +2.8%** | **khớp** | **1 bản, sạch** |
+| `font-weight: 700` (face Bold thật) | mảnh hơn 8–12% | rộng hơn ~6% | 1 bản, sạch |
+| `text-shadow` 24 bản sao | khớp | khớp | **25 bản** |
+| `-webkit-text-stroke` | mảnh hơn 24–28% | khớp | **2 bản** |
 
-`-webkit-text-stroke` khiến Chromium vẽ chữ hai lần, text trích ra bị nhân đôi
-ký tự (`CCAARREEEERR OOBBJJEECCTTIIVVEE`) — hệ thống ATS sẽ đọc CV thành rác.
-Đã thử lại trên Chromium hiện tại: vẫn còn lỗi này. Và nó cũng **nhạt hơn** face
-Bold thật, nên không được lợi gì về độ đậm. Face Bold thật là phương án gần bản
-gốc nhất trong cả ba.
+Hai cách cuối đều khiến Chromium vẽ chữ nhiều lần. Mức thiệt hại tuỳ thư viện
+đọc PDF: `pdfium` (Chrome), `poppler/pdftotext` và `PDFBox` có lọc trùng nên đọc
+sạch, nhưng **`pypdf` và `pdfminer/pdfplumber` thì không** — đọc ra
+`Mai Thế ToànMai Thế Toàn…` lặp 25 lần, hoặc `CCAARREEEERR OOBBJJEECCTTIIVVEE`.
+Nhiều hệ thống lọc hồ sơ dùng đúng hai thư viện đó, nên không chấp nhận được.
+
+**Quy trình build:** `generate-pdf.mjs` gọi `ensureFauxBoldFont()`; nếu dựng
+được font thì nối thêm khối `@font-face` vào cuối `output/cv-style.css`, không
+thì giữ nguyên `font-weight: 700` khai trong template. Bản build in rõ đang dùng
+đường nào. Font chỉ dựng lại khi `resume.yaml` hoặc script đổi.
+
+Cần `python` + `pip install fonttools brotli` và máy Windows có `times.ttf`.
+Thiếu thứ nào cũng không làm hỏng build — chỉ là chữ đậm rơi về face Bold thật.
+Dựng riêng bằng `npm run build:font`.
+
+> **Không commit `output/times-faux-bold.woff2`.** Times New Roman đi kèm giấy
+> phép Windows; phát hành lại file font, kể cả bản đã sửa và cắt gọn, là vi
+> phạm. Nhúng subset vào chính file PDF thì được phép — bản gốc của TopCV cũng
+> làm đúng như vậy. `.gitignore` đã chặn sẵn `output/*.woff2`.
 
 **Sau mỗi lần đổi CSS liên quan tới chữ đậm/nghiêng, phải kiểm tra lại text trích
 xuất được:** `pdftotext output/Mai-The-Toan-CV.pdf -` — nếu thấy ký tự bị nhân đôi

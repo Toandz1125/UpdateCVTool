@@ -34,7 +34,8 @@ const MIME_TYPES = {
   '.pdf': 'application/pdf',
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
-  '.md': 'text/markdown; charset=utf-8'
+  '.md': 'text/markdown; charset=utf-8',
+  '.woff2': 'font/woff2'
 };
 
 /**
@@ -311,7 +312,8 @@ ${latestProject.github ? `Repository: ${latestProject.github}` : ''}`;
     let filePath = '';
     if (pathname === '/' || pathname === '/index.html') {
       filePath = path.join(PUBLIC_DIR, 'index.html');
-    } else if (pathname === '/preview.html' || pathname === '/cv-style.css' || pathname === '/Mai-The-Toan-CV.pdf') {
+    } else if (pathname === '/preview.html' || pathname === '/cv-style.css'
+               || pathname === '/Mai-The-Toan-CV.pdf' || pathname === '/times-faux-bold.woff2') {
       filePath = path.join(OUTPUT_DIR, pathname.slice(1));
     } else if (pathname.startsWith('/svg/')) {
       filePath = path.join(ROOT_DIR, 'captures', 'Toandz1125', pathname);
