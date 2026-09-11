@@ -40,9 +40,10 @@ function switchPlatformTab(tab) {
   } else if (tab === 'topcv') {
     document.getElementById('tabNavTopCV').classList.add('active');
     document.getElementById('viewTopCV').classList.add('active');
-    // Refresh PDF preview iframe
+    // Nạp lại khung xem trước. Dùng chính file PDF chứ không phải preview.html
+    // để thấy đúng cách chia 2 trang A4; tham số t chặn bộ nhớ đệm.
     const iframe = document.getElementById('topcvIframe');
-    iframe.src = `/preview.html?t=${Date.now()}`;
+    iframe.src = `/Mai-The-Toan-CV.pdf?t=${Date.now()}#view=FitH`;
   } else if (tab === 'github') {
     document.getElementById('tabNavGitHub').classList.add('active');
     document.getElementById('viewGitHub').classList.add('active');

@@ -193,7 +193,11 @@
     </div>
 
     <div class="pdf-preview-container">
-      <iframe class="pdf-preview-iframe" id="topcvIframe" src="/preview.html"></iframe>
+      <!-- Nhúng thẳng file PDF chứ không phải preview.html: preview.html là một
+           trang HTML liền mạch nên không thấy được bố cục 2 trang A4. Giữ nguyên
+           thanh công cụ của trình xem PDF để có số trang và cột ảnh thu nhỏ. -->
+      <iframe class="pdf-preview-iframe" id="topcvIframe"
+              src="/Mai-The-Toan-CV.pdf#view=FitH"></iframe>
     </div>
   </div>
 

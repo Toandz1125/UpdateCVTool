@@ -141,9 +141,16 @@ mục — đường kẻ có thể khớp trong khi chữ bên trong mục bị 
 đường chân chữ, gom cụm đáy hộp bao rồi lấy cụm đông nhất; lấy trung bình sẽ bị
 các chữ có nét thòng xuống (g, p, y) kéo lệch ±0.26mm và tạo ra lỗi giả.
 
-Khối `@media screen` ở cuối `cv-style.css` ép khung xem trước trên dashboard về
-đúng khổ A4 (210mm), kể cả 4px thụt chữ. Không có nó thì preview giãn hết bề
-ngang iframe và ngắt dòng khác hẳn file PDF.
+Khung xem trước trên dashboard **nhúng thẳng `output/Mai-The-Toan-CV.pdf`**, không
+phải `output/preview.html`. `preview.html` là một trang HTML liền mạch nên không
+chia trang: nhìn vào không biết được nội dung rơi vào trang 1 hay trang 2. Nhúng
+file PDF thì thấy đúng 2 trang A4, kèm số trang và cột ảnh thu nhỏ của trình xem
+PDF. Đây cũng chính là file sẽ nộp đi nên không bao giờ lệch với bản thật.
+
+`preview.html` vẫn được sinh ra để mở trực tiếp khi cần soi HTML/CSS. Khối
+`@media screen` ở cuối `cv-style.css` phục vụ đúng lúc đó: nó ép khung về khổ A4
+(210mm), kể cả 4px thụt chữ. Không có nó thì trang giãn hết bề ngang cửa sổ và
+ngắt dòng khác hẳn file PDF.
 
 ### Chữ đậm — tự dựng font, không dùng face Bold
 
