@@ -105,6 +105,11 @@ Sai số hiện tại so với bản gốc (đo vị trí 8 đường kẻ tiêu
 đầu đúng tại "Backend Development" như bản gốc. File PDF sinh ra chỉ nhúng đúng
 một face `TimesNewRomanPSMT`, giống hệt bản gốc.
 
+Khối `@media screen` ở cuối `cv-style.css` ép khung xem trước trên dashboard về
+đúng khổ A4 (210mm, vùng chữ 200mm). Không có nó thì preview giãn hết bề ngang
+iframe và ngắt dòng khác hẳn file PDF. Khối này không ảnh hưởng bản in vì
+Playwright xuất PDF ở chế độ print media.
+
 **Sau mỗi lần đổi CSS liên quan tới chữ đậm/nghiêng, phải kiểm tra lại text trích
 xuất được:** `pdftotext output/Mai-The-Toan-CV.pdf -` — nếu thấy ký tự bị nhân đôi
 thì cách làm đậm đó đang phá CV về mặt ATS, phải đổi cách khác.

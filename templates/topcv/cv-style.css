@@ -366,3 +366,28 @@ body {
   font-weight: 400;
   text-shadow: var(--faux-bold) 0 0 currentColor, calc(-1 * var(--faux-bold)) 0 0 currentColor;
 }
+
+/* ==========================================================================
+   XEM TRƯỚC TRÊN MÀN HÌNH
+   @page chỉ có hiệu lực khi in, nên trên dashboard khung nội dung giãn hết bề
+   ngang iframe và ngắt dòng khác hẳn file PDF. Ép đúng khổ A4 để preview khớp
+   bản in. Khối này không đụng tới PDF vì Playwright xuất ở chế độ print media.
+   ========================================================================== */
+@media screen {
+  body {
+    background: #525659;
+    padding: 24px 0;
+  }
+
+  .cv-container {
+    /* box-sizing: border-box (đặt ở đầu file) nên 210mm đã gồm cả lề hai bên,
+       vùng chữ còn đúng 200mm giống hệt khi in */
+    width: 210mm;
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 4mm 5mm 0.5mm 5mm;
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+}
