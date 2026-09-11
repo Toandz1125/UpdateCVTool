@@ -269,6 +269,10 @@ body {
   font-size: 7.8pt;
   line-height: 1.43;
   align-items: baseline;
+  /* Buộc cả hàng đi liền khối: nếu không, nét ngăn (cao 1px) lọt vừa chỗ trống
+     cuối trang 1 và bị bỏ lại đó, trong khi phần chữ của hàng sang trang 2. */
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 .skill-row + .skill-row {

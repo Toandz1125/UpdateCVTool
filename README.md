@@ -104,6 +104,7 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Khoảng cách trong header | tên `margin-bottom: 9.2px`, chức danh `13px`, header `45.3px` | Bản gốc giãn đều 4.78mm giữa tên–chức danh và chức danh–liên hệ, rồi 11.68mm trước mục đầu tiên. Đừng dồn hết vào `margin-bottom` của header |
 | Icon liên hệ | `14px` | Khớp chiều cao glyph FontAwesome 10.5pt của bản gốc |
 | Kẻ ngăn hàng SKILLS | phần tử `<i class="skill-sep">` trong hàng | **Không dùng `border`**: border của hàng mở đầu một trang mới bị Chromium bỏ qua, nên nét ở đầu trang 2 sẽ mất. Phần tử nội dung thì luôn được vẽ |
+| `.skill-row` | `break-inside: avoid` | Thiếu dòng này thì nét ngăn (cao 1px) lọt vừa chỗ trống cuối trang 1 và bị bỏ lại đó, còn chữ của hàng thì sang trang 2 |
 
 Sai số hiện tại (so từng dòng chữ một, raster 400dpi):
 
