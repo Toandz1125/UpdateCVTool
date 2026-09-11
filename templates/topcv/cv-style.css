@@ -153,7 +153,7 @@ body {
    RESEARCH & PUBLICATIONS
    ========================================================================== */
 .research-item {
-  margin-bottom: 15.8px;
+  margin-bottom: 21.5px;
   font-size: 7.8pt;
   line-height: 1.34;
 }
@@ -209,7 +209,7 @@ body {
    ========================================================================== */
 .project-item {
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 14.6px;
+  padding-bottom: 15.2px;
   margin-bottom: 16px;
 }
 
@@ -251,16 +251,26 @@ body {
 .skills-grid {
   display: flex;
   flex-direction: column;
+  /* Kéo lên đúng phần margin-bottom của tiêu đề mục: nhờ vậy hàng skill đầu
+     tiên vừa đủ nằm lại trang 1 (Chromium không cắt đôi được hàng grid), và
+     khoảng cách từ nét kẻ SKILLS tới dòng chữ cũng sát bản gốc hơn. */
+  margin-top: -5px;
 }
 
+/* Đường kẻ đặt ở CẠNH TRÊN của hàng kế tiếp, không phải cạnh dưới hàng này.
+   Nhờ vậy khi hàng đầu nằm cuối trang 1 thì nét kẻ của nó rơi sang đầu trang 2,
+   đúng như bản gốc. Vị trí nét trên giấy không đổi so với cách cũ. */
 .skill-row {
   display: grid;
   grid-template-columns: 200px 1fr;
-  border-bottom: 1px solid #e0e0e0;
   padding: 6.95px 0;
   font-size: 7.8pt;
   line-height: 1.34;
   align-items: baseline;
+}
+
+.skill-row + .skill-row {
+  border-top: 1px solid #e0e0e0;
 }
 
 .skill-name {
@@ -291,7 +301,6 @@ body {
 
 .award-item .item-title {
   font-weight: 400;
-  text-shadow: none;
 }
 
 .simple-list {
@@ -345,34 +354,6 @@ body {
   }
 }
 
-/* ==========================================================================
-   ĐẬM GIẢ LẬP — phải đặt cuối file để thắng các rule font-weight:700 ở trên
-   ========================================================================== */
-/* Bản CV gốc chỉ nhúng đúng một face TimesNewRomanPSMT — phần chữ đậm là do
-   trình kết xuất tô dày nét trên chính face regular đó, không phải face Bold.
-   Dùng face Bold thật sẽ làm chữ rộng hơn khoảng 6.7% và lệch bố cục, nên ở đây
-   tái lập cách làm của bản gốc: giữ font-weight 400 và tô viền bằng text-stroke.
-   Giá trị theo em để tự co giãn theo từng cỡ chữ. */
-:root {
-  --faux-bold: 0.026em;
-}
-
-.cv-name,
-.section-title,
-.item-title,
-.project-sub,
-.meta-label,
-.pub-author-first {
-  font-weight: 400;
-  text-shadow: var(--faux-bold) 0 0 currentColor, calc(-1 * var(--faux-bold)) 0 0 currentColor;
-}
-
-/* ==========================================================================
-   XEM TRƯỚC TRÊN MÀN HÌNH
-   @page chỉ có hiệu lực khi in, nên trên dashboard khung nội dung giãn hết bề
-   ngang iframe và ngắt dòng khác hẳn file PDF. Ép đúng khổ A4 để preview khớp
-   bản in. Khối này không đụng tới PDF vì Playwright xuất ở chế độ print media.
-   ========================================================================== */
 @media screen {
   body {
     background: #525659;

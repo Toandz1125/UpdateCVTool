@@ -96,23 +96,49 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Cột ngày (`.item-header`) | `151.3mm 1fr` | Bản gốc căn **trái** cột ngày tại x≈156.5mm trên trang, KHÔNG đẩy sát lề phải |
 | Tiêu đề giải thưởng | không in đậm | Education/project thì in đậm, riêng award thì không |
 | Nhãn "Role:" | không in đậm | |
-| Chữ đậm | `text-shadow` (đậm giả) | Bản gốc chỉ nhúng 1 face regular; dùng face Bold thật làm chữ rộng hơn 6.7%. **Không dùng `-webkit-text-stroke`** — Chromium xuất thành font Type3 và text trích ra bị nhân đôi ký tự (`CCAARREEEERR`), phá khả năng đọc của ATS |
-| Chữ nghiêng | `transform: skewX(-12deg)` | Bản gốc cũng không nhúng face Italic |
-| `--faux-bold` | `0.026em` | Cho bề rộng 32.17mm và mật độ nét 39.9%, khớp bản gốc (32.17mm / 39.4%) |
+| Chữ đậm | face Bold thật (`font-weight: 700`) | Xem mục "Chữ đậm" bên dưới |
+| Chữ nghiêng | `transform: skewX(-12deg)` | Bản gốc không nhúng face Italic |
+| Lưới SKILLS | `margin-top: -5px` | Để hàng skill đầu tiên vừa đủ nằm lại cuối trang 1 |
+| Kẻ ngăn hàng SKILLS | `border-top` ở hàng SAU | Không dùng `border-bottom`: hàng cuối trang 1 sẽ sinh nét thừa mà bản gốc không có |
 
 Sai số hiện tại so với bản gốc (đo vị trí 8 đường kẻ tiêu đề mục, raster 200dpi):
-6/8 mốc lệch ≤ 0.7mm, riêng PROJECTS lệch 1.5mm và SKILLS lệch 2.1mm. Trang 2 bắt
-đầu đúng tại "Backend Development" như bản gốc. File PDF sinh ra chỉ nhúng đúng
-một face `TimesNewRomanPSMT`, giống hệt bản gốc.
+**cả 8 mốc lệch ≤ 0.2mm**, trong đó 5 mốc lệch đúng 0.0mm. Trang 1 kết thúc bằng
+hàng "Programming Languages" và trang 2 bắt đầu bằng "Backend Development", đúng
+như bản gốc.
 
 Khối `@media screen` ở cuối `cv-style.css` ép khung xem trước trên dashboard về
 đúng khổ A4 (210mm, vùng chữ 200mm). Không có nó thì preview giãn hết bề ngang
 iframe và ngắt dòng khác hẳn file PDF. Khối này không ảnh hưởng bản in vì
 Playwright xuất PDF ở chế độ print media.
 
+### Chữ đậm — đã thử 3 cách, chọn cách ít dở nhất
+
+Bản gốc chỉ nhúng một face `TimesNewRomanPSMT`, chữ đậm là do trình kết xuất tô
+dày nét trên chính face đó. Không tái lập được trọn vẹn bằng CSS:
+
+| Cách | Nét chữ | Bề rộng | ATS đọc được |
+|---|---|---|---|
+| `font-weight: 700` (đang dùng) | sắc gọn | rộng hơn 6.7% | có |
+| `-webkit-text-stroke` | sắc gọn | khớp | **KHÔNG** |
+| `text-shadow` | nhoè, có bóng đôi | khớp | có |
+
+`-webkit-text-stroke` khiến Chromium xuất chữ đậm thành font **Type3** và vẽ hai
+lần, text trích ra bị nhân đôi ký tự (`CCAARREEEERR OOBBJJEECCTTIIVVEE`) — hệ
+thống ATS sẽ đọc CV thành rác. `text-shadow` khớp bề rộng nhưng rải mực thành
+vệt mờ, nhìn nhạt hơn bản gốc dù cùng lượng mực. Face Bold thật giữ được nét sắc,
+đổi lại rộng hơn 6.7% — đây là đánh đổi được chọn.
+
 **Sau mỗi lần đổi CSS liên quan tới chữ đậm/nghiêng, phải kiểm tra lại text trích
 xuất được:** `pdftotext output/Mai-The-Toan-CV.pdf -` — nếu thấy ký tự bị nhân đôi
 thì cách làm đậm đó đang phá CV về mặt ATS, phải đổi cách khác.
+
+### Còn khác bản gốc
+
+Bản gốc để hàng skill đầu tiên tràn qua ranh giới trang: chữ ở cuối trang 1 còn
+nét gạch chân rơi xuống đầu trang 2 (y = 2.26mm, phía trên cả lề trên). Chromium
+coi hàng grid/table là khối không cắt được nên không tái tạo được. Cách hiện tại
+bỏ hẳn nét đó thay vì sinh nét thừa ở đáy trang 1 — sai lệch còn lại đúng một
+nét xám 1px.
 
 **Cảnh báo khi sửa spacing:** vị trí đường kẻ SKILLS phải ở ≤ 286.5mm, nếu không
 hàng "Programming Languages" bị đẩy sang trang 2 và lệch hẳn so với bản gốc. Chỉ
