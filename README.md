@@ -87,6 +87,8 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Thông số | Giá trị | Ghi chú |
 |---|---|---|
 | Lề trang (`@page`) | `4mm 5mm 0mm 5mm` | Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng |
+| Giãn dòng (`line-height`) | `1.43` | Đo từ bản gốc: hai dòng đoạn objective cách nhau 3.94mm. Để 1.34 thì chữ trong mục bị nén và phải bù bằng khoảng hở lớn giữa các khối — sai bố cục |
+| Bước hàng SKILLS | `padding: 7.4px 0` | Bước hàng bản gốc 8.06mm |
 | Cỡ chữ body | `7.8pt` | Để 8.8pt thì giá trị cột SKILLS bị xuống dòng, lệch hẳn nhịp trang |
 | Căn lề đoạn văn | `left` | Bản gốc căn trái, KHÔNG justify |
 | Cỡ tên | `14.4pt` | |
@@ -103,10 +105,25 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Icon liên hệ | `14px` | Khớp chiều cao glyph FontAwesome 10.5pt của bản gốc |
 | Kẻ ngăn hàng SKILLS | `border-top` ở hàng SAU | Không dùng `border-bottom`: hàng cuối trang 1 sẽ sinh nét thừa mà bản gốc không có |
 
-Sai số hiện tại so với bản gốc (đo vị trí 8 đường kẻ tiêu đề mục, raster 200dpi):
-**cả 8 mốc lệch ≤ 0.2mm**, trong đó 5 mốc lệch đúng 0.0mm. Trang 1 kết thúc bằng
-hàng "Programming Languages" và trang 2 bắt đầu bằng "Backend Development", đúng
-như bản gốc.
+Sai số hiện tại (so từng dòng chữ một, raster 400dpi):
+
+| | Số dòng | Lệch trung bình | Lệch lớn nhất |
+|---|---|---|---|
+| Trang 1 | 52 | **0.28mm** | **0.76mm** |
+| Trang 2 | 18 | 2.41mm | 7.11mm |
+
+Trang 1 khớp từng dòng. Trang 2 lệch nhiều hơn **vì dữ liệu khác bản gốc**:
+`skills.tools` trong `data/resume.yaml` có thêm 7 mục (Windows Terminal,
+PythonAnywhere, Firebase, Cloudflare, Google Cloud, Arduino, Canva) nên hàng
+Tools xuống 2 dòng thay vì 1, đẩy HONORS/CERTIFICATES/HOBBIES xuống theo. Đây
+không phải lỗi template — bỏ bớt các mục đó đi thì trang 2 cũng khớp.
+
+Trang 1 kết thúc bằng hàng "Programming Languages" và trang 2 bắt đầu bằng
+"Backend Development", đúng như bản gốc.
+
+**Cách tự kiểm tra sau khi sửa CSS:** so vị trí từng dòng giữa hai file PDF bằng
+cách raster hoá rồi dò các dải có mực — đừng chỉ nhìn vị trí đường kẻ tiêu đề
+mục, vì đường kẻ có thể khớp trong khi chữ bên trong mục bị nén.
 
 Khối `@media screen` ở cuối `cv-style.css` ép khung xem trước trên dashboard về
 đúng khổ A4 (210mm, vùng chữ 200mm). Không có nó thì preview giãn hết bề ngang

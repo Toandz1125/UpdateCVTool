@@ -16,7 +16,7 @@ body {
   color: #000000;
   background-color: #ffffff;
   font-size: 7.8pt;
-  line-height: 1.32;
+  line-height: 1.43;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -31,21 +31,21 @@ body {
    ========================================================================== */
 .cv-header {
   text-align: center;
-  margin-bottom: 45.3px;
+  margin-bottom: 40.3px;
 }
 
 .cv-name {
   font-size: 14.4pt;
   font-weight: 700;
   color: #000000;
-  margin-bottom: 9.2px;
+  margin-bottom: 7.0px;
 }
 
 .cv-title {
   font-size: 9.6pt;
   font-weight: 400;
   color: #000000;
-  margin-bottom: 13px;
+  margin-bottom: 14.9px;
 }
 
 .cv-contact {
@@ -94,7 +94,7 @@ body {
   text-transform: uppercase;
   border-bottom: 2px solid #000000;
   padding-bottom: 3.1px;
-  margin-bottom: 5px;
+  margin-bottom: 6.6px;
 }
 
 /* ==========================================================================
@@ -104,8 +104,9 @@ body {
   font-size: 7.8pt;
   color: #000000;
   text-align: left;
-  line-height: 1.34;
-  margin-bottom: 34.4px;
+  line-height: 1.43;
+  margin-top: 17px;
+  margin-bottom: 19.9px;
 }
 
 /* ==========================================================================
@@ -113,7 +114,7 @@ body {
    ========================================================================== */
 .edu-item {
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 22.4px;
+  padding-bottom: 11.8px;
   margin-bottom: 5px;
 }
 
@@ -140,22 +141,22 @@ body {
 .item-subtitle {
   font-size: 7.8pt;
   color: #000000;
-  margin-top: 10px;
+  margin-top: 15.3px;
 }
 
 .gpa-tag {
   font-size: 7.8pt;
   color: #000000;
-  margin-top: 9px;
+  margin-top: 6.2px;
 }
 
 /* ==========================================================================
    RESEARCH & PUBLICATIONS
    ========================================================================== */
 .research-item {
-  margin-bottom: 21.5px;
+  margin-bottom: 19.9px;
   font-size: 7.8pt;
-  line-height: 1.34;
+  line-height: 1.43;
 }
 
 /* Bản gốc chỉ in đậm tác giả đứng đầu, các đồng tác giả để chữ thường */
@@ -200,7 +201,7 @@ body {
 }
 
 .pub-detail {
-  margin-top: 12px;
+  margin-top: 0.3px;
   text-align: left;
 }
 
@@ -209,8 +210,8 @@ body {
    ========================================================================== */
 .project-item {
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 15.2px;
-  margin-bottom: 16px;
+  padding-bottom: 4px;
+  margin-bottom: 9.5px;
 }
 
 .project-sub {
@@ -218,21 +219,21 @@ body {
   font-weight: 700;
   color: #000000;
   text-transform: uppercase;
-  margin-top: 2px;
-  margin-bottom: 3px;
+  margin-top: 11.5px;
+  margin-bottom: 6.1px;
 }
 
 .bullet-points {
   padding-left: 16px;
-  margin: 1px 0;
+  margin: 4.1px 0 1px 0;
   font-size: 7.8pt;
   color: #000000;
   text-align: left;
 }
 
 .bullet-points li {
-  margin-bottom: 2px;
-  line-height: 1.34;
+  margin-bottom: 0.5px;
+  line-height: 1.43;
 }
 
 .meta-label {
@@ -263,9 +264,9 @@ body {
 .skill-row {
   display: grid;
   grid-template-columns: 200px 1fr;
-  padding: 6.95px 0;
+  padding: 7.4px 0;
   font-size: 7.8pt;
-  line-height: 1.34;
+  line-height: 1.43;
   align-items: baseline;
 }
 
@@ -290,7 +291,7 @@ body {
 .award-item {
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 8px;
-  margin-bottom: 19px;
+  margin-bottom: 14.7px;
 }
 
 .award-header {
@@ -313,7 +314,7 @@ body {
   grid-template-columns: 151.3mm 1fr;
   align-items: baseline;
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 12px;
+  padding-bottom: 6.9px;
   margin-bottom: 9px;
 }
 
