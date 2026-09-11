@@ -43,7 +43,7 @@ function switchPlatformTab(tab) {
     // Nạp lại khung xem trước. Dùng chính file PDF chứ không phải preview.html
     // để thấy đúng cách chia 2 trang A4; tham số t chặn bộ nhớ đệm.
     const iframe = document.getElementById('topcvIframe');
-    iframe.src = `/Mai-The-Toan-CV.pdf?t=${Date.now()}#view=FitH`;
+    iframe.src = `/Mai-The-Toan-CV.pdf?t=${Date.now()}#zoom=100`;
   } else if (tab === 'github') {
     document.getElementById('tabNavGitHub').classList.add('active');
     document.getElementById('viewGitHub').classList.add('active');

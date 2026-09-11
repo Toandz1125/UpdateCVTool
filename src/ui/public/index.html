@@ -195,9 +195,11 @@
     <div class="pdf-preview-container">
       <!-- Nhúng thẳng file PDF chứ không phải preview.html: preview.html là một
            trang HTML liền mạch nên không thấy được bố cục 2 trang A4. Giữ nguyên
-           thanh công cụ của trình xem PDF để có số trang và cột ảnh thu nhỏ. -->
+           thanh công cụ của trình xem PDF để có số trang và cột ảnh thu nhỏ.
+           zoom=100 là cỡ thật của khổ A4: vừa thấy trọn bề ngang trang vừa đọc
+           được chữ. Để FitH thì trang phóng to hết khung, không thấy mép giấy. -->
       <iframe class="pdf-preview-iframe" id="topcvIframe"
-              src="/Mai-The-Toan-CV.pdf#view=FitH"></iframe>
+              src="/Mai-The-Toan-CV.pdf#zoom=100"></iframe>
     </div>
   </div>
 
