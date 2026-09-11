@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>UpdateCV Manager - Mai Thế Toàn</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Navbar with Platform Tabs -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-icon">🚀</div>
+      <div>
+        <div class="brand-title">UpdateCV Manager</div>
+        <div class="brand-subtitle">Mai Thế Toàn - Backend Developer</div>
+      </div>
+    </div>
+
+    <!-- 4 MAIN PLATFORM TABS -->
+    <nav class="nav-platform-tabs">
+      <button class="platform-tab active" id="tabNavEditor" onclick="switchPlatformTab('editor')">
+        <span>📝</span> <span>Nhập Liệu Chung</span>
+      </button>
+      <button class="platform-tab tab-topcv" id="tabNavTopCV" onclick="switchPlatformTab('topcv')">
+        <span>📄</span> <span>TopCV (PDF A4)</span>
+      </button>
+      <button class="platform-tab tab-github" id="tabNavGitHub" onclick="switchPlatformTab('github')">
+        <span>🐙</span> <span>GitHub Profile</span>
+      </button>
+      <button class="platform-tab tab-linkedin" id="tabNavLinkedIn" onclick="switchPlatformTab('linkedin')">
+        <span>💼</span> <span>LinkedIn Assistant</span>
+      </button>
+    </nav>
+
+    <div class="nav-actions">
+      <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">
+        ● Sẵn sàng
+      </span>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- VIEW 1: NHẬP LIỆU CHUNG (SSoT Editor) -->
+  <!-- ========================================================================= -->
+  <div class="view-container active" id="viewEditor">
+    <div class="dashboard-grid">
+
+      <!-- CỘT TRÁI: DỮ LIỆU HIỆN CÓ -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📂</span>
+            <span>Dữ liệu Hồ sơ Đang Quản lý</span>
+          </div>
+          <span class="badge badge-lock">🔒 Có bảo vệ cảnh báo</span>
+        </div>
+        <div class="panel-body" id="existingDataContainer">
+          <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+            Đang tải dữ liệu hồ sơ...
+          </div>
+        </div>
+      </section>
+
+      <!-- CỘT PHẢI: FORM THÊM MỚI / CHỈNH SỬA -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title" id="formPanelTitle">
+            <span>➕</span>
+            <span>Thêm Dữ Liệu Con Mới</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btnCancelEdit" style="display: none;" onclick="cancelEditMode()">✕ Hủy sửa</button>
+        </div>
+
+        <div class="panel-body">
+          <!-- Form Tabs -->
+          <div class="form-tabs" id="formTabs">
+            <button class="tab-btn active" onclick="switchFormTab('project')">➕ Dự án mới</button>
+            <button class="tab-btn" onclick="switchFormTab('skill')">➕ Kỹ năng mới</button>
+            <button class="tab-btn" onclick="switchFormTab('cert')">➕ Chứng chỉ / Giải thưởng</button>
+          </div>
+
+          <!-- FORM: DỰ ÁN -->
+          <form id="formProject" onsubmit="handleSaveProject(event)">
+            <div class="form-group">
+              <label class="form-label">Tên dự án *</label>
+              <input type="text" class="form-input" id="projName" required placeholder="Ví dụ: AI Security Middleware">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Phụ đề (Viết hoa)</label>
+              <input type="text" class="form-input" id="projSubtitle" placeholder="Ví dụ: AI POWERED WEB API DEFENSE SYSTEM">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Thời gian *</label>
+              <input type="text" class="form-input" id="projPeriod" required placeholder="Ví dụ: 06/2026 - Present hoặc 2026">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Thành tựu & Điểm nổi bật (Mỗi dòng 1 gạch đầu dòng) *</label>
+              <textarea class="form-textarea" id="projHighlights" rows="4" required placeholder="• Architected and implemented...&#10;• Optimized response latency from 500ms to 50ms..."></textarea>
+              <div class="form-hint">Mẹo: Sử dụng action verbs (Architected, Engineered, Built) và số liệu cụ thể.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tech Stack (Ngăn cách bằng dấu phẩy) *</label>
+              <input type="text" class="form-input" id="projTechStack" required placeholder="ASP.NET Core, Redis, RabbitMQ, Docker, Clean Architecture">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Link GitHub Repository</label>
+              <input type="url" class="form-input" id="projGithub" placeholder="https://github.com/Toandz1125/...">
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+              <input type="checkbox" id="projPinned" checked style="width: 16px; height: 16px; accent-color: var(--primary);">
+              <label for="projPinned" class="form-label" style="margin-bottom: 0; cursor: pointer;">Ghim và hiển thị widget trên GitHub Profile</label>
+            </div>
+
+            <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 15px; padding: 11px;">
+              💾 Lưu Dữ Liệu & Tự Động Phân Phối
+            </button>
+          </form>
+
+          <!-- FORM: KỸ NĂNG -->
+          <form id="formSkill" style="display: none;" onsubmit="handleSaveSkill(event)">
+            <div class="form-group">
+              <label class="form-label">Nhóm kỹ năng *</label>
+              <select class="form-select" id="skillGroup" required>
+                <option value="programming_languages">Programming Languages (Ngôn ngữ lập trình)</option>
+                <option value="backend_development" selected>Backend Development (Phát triển Backend)</option>
+                <option value="database">Database (Cơ sở dữ liệu)</option>
+                <option value="authentication_and_security">Authentication & Security (Bảo mật & Xác thực)</option>
+                <option value="architecture_and_design">Architecture & Design (Kiến trúc & Thiết kế)</option>
+                <option value="devops">DevOps</option>
+                <option value="monitoring">Monitoring (Giám sát)</option>
+                <option value="tools">Tools (Công cụ)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tên công nghệ / Kỹ năng mới *</label>
+              <input type="text" class="form-input" id="skillName" required placeholder="Ví dụ: Kafka, Kubernetes, Elasticsearch...">
+            </div>
+
+            <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 15px; padding: 11px;">
+              💾 Thêm Kỹ Năng & Biên Dịch
+            </button>
+          </form>
+
+          <!-- FORM: CHỨNG CHỈ -->
+          <form id="formCert" style="display: none;" onsubmit="handleSaveCert(event)">
+            <div class="form-group">
+              <label class="form-label">Tên chứng chỉ hoặc Giải thưởng *</label>
+              <input type="text" class="form-input" id="certName" required placeholder="Ví dụ: AWS Certified Solutions Architect">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Năm đạt được *</label>
+              <input type="text" class="form-input" id="certYear" required placeholder="Ví dụ: 2026">
+            </div>
+
+            <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 15px; padding: 11px;">
+              💾 Thêm Chứng Chỉ & Biên Dịch
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- VIEW 2: TAB TOPCV (Bản in PDF A4 2 trang) -->
+  <!-- ========================================================================= -->
+  <div class="view-container" id="viewTopCV">
+    <div class="preview-toolbar">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 20px;">📄</span>
+        <div>
+          <div style="font-weight: 700; font-size: 15px;">Bản CV Chuẩn Nộp TopCV (A4 2 Trang)</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Định dạng ATS-friendly, render tự động qua Playwright</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" onclick="openPdfTab()">📄 Mở file PDF riêng</button>
+        <button class="btn btn-topcv" onclick="triggerTopCVSync()">🌐 Mở Playwright Tải Lên TopCV</button>
+      </div>
+    </div>
+
+    <div class="pdf-preview-container">
+      <iframe class="pdf-preview-iframe" id="topcvIframe" src="/preview.html"></iframe>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- VIEW 3: TAB GITHUB PROFILE -->
+  <!-- ========================================================================= -->
+  <div class="view-container" id="viewGitHub">
+    <div class="preview-toolbar">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 20px;">🐙</span>
+        <div>
+          <div style="font-weight: 700; font-size: 15px;">GitHub Profile README (Toandz1125/Toandz1125)</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Xem trực quan hệt như trên github.com: Typing SVG, Badges, Widgets, Quote, Snake</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <div style="display: flex; background: rgba(0,0,0,0.3); padding: 3px; border-radius: 6px; border: 1px solid var(--border-color);">
+          <button class="btn btn-sm btn-primary" id="btnGhRendered" onclick="setGithubViewMode('rendered')">👁️ Xem Giao Diện Thật</button>
+          <button class="btn btn-sm btn-secondary" id="btnGhRaw" onclick="setGithubViewMode('raw')">📄 Xem Mã Markdown</button>
+        </div>
+        <a href="https://github.com/Toandz1125" target="_blank" class="btn btn-secondary">🔗 Xem Trên GitHub</a>
+        <button class="btn btn-primary" onclick="triggerGithubSync()">🐙 Commit & Đồng Bộ Repo</button>
+      </div>
+    </div>
+
+    <div class="github-preview-container">
+      <!-- Rich Visual Preview (Giống hệt trên GitHub) -->
+      <div id="githubRenderedPreview" class="github-rendered-content">
+        <div style="text-align: center; padding: 40px; color: var(--text-muted);">Đang dựng giao diện GitHub Profile...</div>
+      </div>
+      <!-- Raw Markdown Preview -->
+      <div class="markdown-raw" id="githubMarkdownContent" style="display: none;">Đang nạp file README.md...</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- VIEW 4: TAB LINKEDIN ASSISTANT -->
+  <!-- ========================================================================= -->
+  <div class="view-container" id="viewLinkedIn">
+    <div class="preview-toolbar">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 20px;">💼</span>
+        <div>
+          <div style="font-weight: 700; font-size: 15px;">LinkedIn Safe Assistant (Trợ lý Format & Copy An Toàn)</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Tự động cắt gọt theo độ dài ký tự chuẩn của LinkedIn, bảo vệ an toàn 100% cho tài khoản</div>
+        </div>
+      </div>
+      <a href="https://www.linkedin.com/in/me/" target="_blank" class="btn btn-linkedin">🔗 Mở Trang LinkedIn Cá Nhân</a>
+    </div>
+
+    <div class="linkedin-grid" id="linkedinCardsContainer">
+      <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
+        Đang nạp dữ liệu LinkedIn...
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION MODAL (Cảnh báo 2 bước) -->
+  <div class="modal-backdrop" id="confirmModal">
+    <div class="modal-content">
+      <div class="modal-icon" id="modalIcon">⚠️</div>
+      <div class="modal-title" id="modalTitle">Xác nhận thao tác</div>
+      <div class="modal-body" id="modalBody">
+        Bạn có chắc chắn muốn thực hiện thao tác này không?
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeConfirmModal(false)">Hủy bỏ</button>
+        <button class="btn btn-danger" id="btnModalConfirm" onclick="closeConfirmModal(true)">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

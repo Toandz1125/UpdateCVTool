@@ -1,0 +1,194 @@
+# ==============================================================================
+# DATA NGUỒN CV MAI THẾ TOÀN (Single Source of Truth)
+# QUY TẮC:
+# 1. Giữ nguyên các đầu mục lớn (Section Headers) không được xóa/đổi tên.
+# 2. Khi có thông tin mới, chỉ thêm "data con" (sub-items) vào bên trong các mục này.
+# 3. Giữ nguyên văn phong tiếng Anh kỹ thuật (TopCV) và style năng động (GitHub).
+# ==============================================================================
+
+basics:
+  name: "Mai Thế Toàn"
+  title: "Backend Developer"
+  phone: "(+84) 869 744 213"
+  email: "maithetoan0101@gmail.com"
+  github_username: "Toandz1125"
+  github_url: "https://github.com/Toandz1125"
+  location: "Nam Từ Liêm, Hà Nội"
+  pronouns: "He/Him"
+  fun_fact: "I am a Beginner"
+  career_objective: >
+    Backend Developer focused on ASP.NET Core, distributed systems, and scalable API design.
+    Experienced in building systems, real-time communication, and AI-powered applications
+    using Redis, RabbitMQ, Docker, and Clean Architecture.
+  about_me: >
+    A funny and friendly person who likes to study, listen to music, play the guitar, and go jogging.
+    Looking forward to having a development team and always wants to improve themselves and learn new things.
+    I look forward to finding many opportunities to develop myself.
+  socials:
+    discord: "https://discord.gg/9YmDvhe4"
+    facebook: "https://facebook.com/maitoan0101"
+    instagram: "https://instagram.com/maitoan0101"
+    tiktok: "https://tiktok.com/@hahahihihuhu0101"
+    youtube: "https://youtube.com/@maitoan1125"
+
+education:
+  - school: "Vietnam National University, Hanoi, VNU"
+    period: "2023 - 2026"
+    major: "Computer Science"
+    gpa: "3.5/4.0"
+
+research_and_publications:
+  - authors: "Mai The Toan, Cho Do Xuan, Nguyen Manh Son."
+    title: "Enhancing Web Attack Detection Efficiency Based on Natural Language Processing Techniques."
+    journal: "The Journal of Computer Science and Cybernetics, 2025"
+    doi: "10.15625/1813-9663/23407"
+    roles:
+      - "Conducted NLP model research"
+      - "Built web attack classification datasets"
+      - "Evaluated detection performance"
+    details: >
+      Researched and trained LDWL-based NLP models on a dataset of 31,067 web requests,
+      achieving 99.99% Accuracy and F1-Score in detecting common web attacks, including
+      SQL Injection and XSS. Designed the solution for future integration as a security
+      middleware for Web APIs.
+
+projects:
+  - name: "Calendar Bot"
+    subtitle: "AI SMART APPOINTMENT CHATBOT"
+    period: "01/2026 - 05/2026"
+    highlights:
+      - "Architected and implemented 20+ APIs for appointment scheduling and conflict detection. Optimized response latency from 500ms to under 50ms using Redis caching and leveraged RabbitMQ for asynchronous notification and AI processing, improving scalability and high-availability."
+    tech_stack: "ASP.NET Core, SQLServer, Redis, RabbitMQ, Docker, OpenAI API, Clean Architecture, SignalR (Websocket), Docker compose."
+    github: "https://github.com/Toandz1125/CalendarBot"
+    pinned_on_github: true
+
+  - name: "Sort Schedule"
+    subtitle: "UNIVERSITY SCHEDULING MANAGEMENT SYSTEM"
+    period: "03/2025 - 01/2026"
+    highlights:
+      - "Engineered a university-wide scheduling system using Tabu Search, Graph Coloring, and First-Fit algorithms, solving 178+ conflict-free schedules while satisfying classroom, lecturer, and time-slot constraints. Reduced timetable planning time from weeks to minutes."
+    tech_stack: "ASP.NET Core, EF Core, SQL Server, JWT, Clean Architecture."
+    github: "https://github.com/Toandz1125/SortSchedule"
+    pinned_on_github: false
+
+  - name: "Pharmacy Management"
+    subtitle: "PHARMACY MANAGEMENT SYSTEM"
+    period: "06/2024 - 03/2025"
+    highlights:
+      - "Implemented inventory, sales, supplier, and customer management modules with support for 1,000+ product records and transaction processing workflows."
+    tech_stack: "C#, WinForms, SQL Server, Entity Framework."
+    github: "https://github.com/Toandz1125/LTNC/tree/main/PharmacyManagement"
+    pinned_on_github: false
+
+  - name: "Crypto Currency Tickers"
+    subtitle: "CRYPTO CURRENCY TICKERS"
+    period: "09/2023 - 06/2024"
+    highlights:
+      - "Built an ESP32-based cryptocurrency ticker displaying real-time prices via the CoinGecko API with Wi-Fi connectivity and JSON data processing. The project was selected for exhibition during the university anniversary celebration."
+    tech_stack: "ESP32, C++, Wi-Fi Communication, REST API, CoinGecko API, JSON parsing, Embedded Systems."
+    github: "https://github.com/Toandz1125/Crypto-price-tickers"
+    pinned_on_github: true
+    youtube_id: "hUmSBBVVLpE"
+    youtube_title: "Crypto Price Tickers | Thiết bị hiển thị giá nhiều loại tiền mã hóa, cập nhật liên tục và chính xác"
+    youtube_timestamp: 1734606850
+    youtube_duration: 70
+
+  - name: "Charity Fundraising Platform"
+    subtitle: "NỀN TẢNG ĐÓNG GÓP TÀI CHÍNH TỪ THIỆN, SỬ DỤNG CÔNG NGHỆ BLOCKCHAIN VÀ CÁC HỆ MẬT ĐỂ BẢO MẬT"
+    period: "2024 - 2025"
+    show_in_topcv: false
+    highlights:
+      - "Blockchain-based transparent charity donation platform utilizing cryptography for security."
+    tech_stack: "Blockchain, Cryptography, Backend"
+    github: "https://github.com/Toandz1125/Charity-Fundraising-Platform"
+    pinned_on_github: true
+    youtube_id: "n0YPaJkBPC8"
+    youtube_title: "Nền tảng đóng góp tài chính từ thiện, sử dụng công nghệ blockchain và các hệ mật để bảo mật"
+    youtube_timestamp: 1736764602
+    youtube_duration: 321
+
+  - name: "Portfolio Website"
+    subtitle: "PERSONAL PORTFOLIO WEBSITE"
+    period: "2024"
+    show_in_topcv: false
+    highlights:
+      - "Responsive personal portfolio website showcasing projects, skills, and contact information."
+    tech_stack: "HTML5, CSS3, JavaScript, GitHub Pages"
+    github: "https://github.com/Toandz1125/Portfolio-Website"
+    pinned_on_github: true
+
+skills:
+  programming_languages:
+    - "C#"
+    - "SQL"
+    - "Javascript"
+    - "Python"
+    - "C++"
+  backend_development:
+    - "ASP.NET Core"
+    - "ASP.NET Web API"
+    - "RESTful API Design"
+    - "WinForms"
+    - "Middleware"
+    - "Dependency Injection"
+    - "Transactions"
+  database:
+    - "SQL Server"
+    - "PostgreSQL"
+    - "Entity Framework Core"
+    - "LINQ"
+    - "Database Design"
+    - "Stored Procedure"
+    - "Query Optimization"
+  authentication_and_security:
+    - "JWT Authentication"
+    - "ASP.NET Identity"
+    - "Role-Based Authorization"
+  architecture_and_design:
+    - "Clean Architecture"
+    - "Repository Pattern"
+    - "SOLID Principles"
+    - "MVC Pattern"
+    - "DDD (Domain-Driven Design)"
+  devops:
+    - "Docker"
+    - "GitHub Actions"
+    - "CI/CD"
+  monitoring:
+    - "Prometheus"
+    - "Grafana"
+  tools:
+    - "Git"
+    - "GitHub"
+    - "Docker"
+    - "Postman"
+    - "Redis cache"
+    - "RabbitMQ"
+    - "SignalR"
+    - "Visual Studio"
+    - "AI coding assistant"
+    - "Windows Terminal"
+    - "PythonAnywhere"
+    - "Firebase"
+    - "Cloudflare"
+    - "Google Cloud"
+    - "Arduino"
+    - "Canva"
+
+honors_and_awards:
+  - title: "Outstanding Student Award"
+    year: "2023"
+    detail: "Awarded Academic Excellence Scholarship in Every Semester Throughout Undergraduate Studies"
+
+certificates:
+  - name: "IELTS 6.0"
+    year: "2022"
+  - name: "JLPT N4"
+    year: "2024"
+
+hobbies:
+  - "Researching"
+  - "Running"
+  - "Music"
+  - "Guitar"
+  - "Sports"

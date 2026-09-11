@@ -1,0 +1,339 @@
+/* Lề đo lại từ bản CV gốc TopCV (mực bắt đầu ở 4.2mm trên, 5.2/5.1mm hai bên,
+   2.6mm dưới). Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng. */
+@page {
+  size: A4 portrait;
+  margin: 4mm 5mm 0.5mm 5mm;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Times New Roman", Times, "Noto Serif", Georgia, serif;
+  color: #000000;
+  background-color: #ffffff;
+  font-size: 7.8pt;
+  line-height: 1.32;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cv-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   HEADER (Centered, Serif, Clean Vector Icons, No bottom line)
+   ========================================================================== */
+.cv-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.cv-name {
+  font-size: 14.4pt;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1px;
+  letter-spacing: 0.2px;
+}
+
+.cv-title {
+  font-size: 9.6pt;
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 6px;
+}
+
+.cv-contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 7.8pt;
+  color: #000000;
+}
+
+.cv-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cv-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-icon {
+  width: 11px;
+  height: 11px;
+  fill: currentColor;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   SECTION COMMON (Bold uppercase, solid 2px black divider line)
+   ========================================================================== */
+.cv-section {
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 1.5px;
+  margin-bottom: 5px;
+}
+
+/* ==========================================================================
+   CAREER OBJECTIVE
+   ========================================================================== */
+.objective-text {
+  font-size: 7.8pt;
+  color: #000000;
+  text-align: justify;
+  line-height: 1.34;
+  margin-bottom: 34px;
+}
+
+/* ==========================================================================
+   EDUCATION (With light gray bottom divider)
+   ========================================================================== */
+.edu-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 22px;
+  margin-bottom: 5px;
+}
+
+/* Bản gốc căn TRÁI cột ngày tại một mốc cố định (x≈156.5mm trên trang, tức
+   151.3mm tính từ mép vùng nội dung), không phải đẩy sát lề phải. */
+.item-header {
+  display: grid;
+  grid-template-columns: 151.3mm 1fr;
+  align-items: baseline;
+  font-size: 7.8pt;
+}
+
+.item-title {
+  font-weight: 700;
+  color: #000000;
+}
+
+.item-date {
+  font-size: 7.8pt;
+  color: #000000;
+  font-weight: 400;
+}
+
+.item-subtitle {
+  font-size: 7.8pt;
+  color: #000000;
+  margin-top: 10px;
+}
+
+.gpa-tag {
+  font-size: 7.8pt;
+  color: #000000;
+  margin-top: 9px;
+}
+
+/* ==========================================================================
+   RESEARCH & PUBLICATIONS
+   ========================================================================== */
+.research-item {
+  margin-bottom: 15px;
+  font-size: 7.8pt;
+  line-height: 1.34;
+}
+
+/* Bản gốc chỉ in đậm tác giả đứng đầu, các đồng tác giả để chữ thường */
+.pub-authors {
+  font-weight: 400;
+  color: #000000;
+}
+
+.pub-author-first {
+  font-weight: 700;
+}
+
+.pub-title {
+  font-style: italic;
+  margin: 1px 0;
+}
+
+.pub-meta {
+  margin-bottom: 1px;
+}
+
+/* Bản gốc để nhãn "Role:" chữ thường, không in đậm */
+.pub-role-label {
+  font-size: 7.8pt;
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+.roles-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 1px 0;
+}
+
+.roles-list li::before {
+  content: "- ";
+}
+
+.pub-detail {
+  margin-top: 12px;
+  text-align: justify;
+}
+
+/* ==========================================================================
+   PROJECTS (With light gray divider between items, bullets for tech & github)
+   ========================================================================== */
+.project-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+}
+
+.project-sub {
+  font-size: 7.8pt;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  margin-top: 2px;
+  margin-bottom: 3px;
+}
+
+.bullet-points {
+  padding-left: 16px;
+  margin: 1px 0;
+  font-size: 7.8pt;
+  color: #000000;
+  text-align: justify;
+}
+
+.bullet-points li {
+  margin-bottom: 2px;
+  line-height: 1.34;
+}
+
+.meta-label {
+  font-weight: 700;
+  color: #000000;
+}
+
+.meta-link {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   SKILLS TABLE (Grid with light gray horizontal divider on each row)
+   ========================================================================== */
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 6.95px 0;
+  font-size: 7.8pt;
+  line-height: 1.34;
+  align-items: baseline;
+}
+
+.skill-name {
+  font-weight: 400;
+  color: #000000;
+}
+
+.skill-value {
+  color: #000000;
+}
+
+/* ==========================================================================
+   HONORS & AWARDS & CERTIFICATES (With light gray dividers)
+   ========================================================================== */
+/* Bản gốc coi dòng tiêu đề và dòng mô tả là hai hàng riêng, mỗi hàng có đường kẻ
+   xám của nó; và tiêu đề giải thưởng để chữ thường (khác education/project). */
+.award-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin-bottom: 19px;
+}
+
+.award-header {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.award-item .item-title {
+  font-weight: 400;
+}
+
+.simple-list {
+  list-style: none;
+  font-size: 7.8pt;
+}
+
+.simple-list-item {
+  display: grid;
+  grid-template-columns: 151.3mm 1fr;
+  align-items: baseline;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 12px;
+  margin-bottom: 9px;
+}
+
+.simple-list-name {
+  color: #000000;
+}
+
+.simple-list-detail {
+  font-size: 7.8pt;
+  color: #000000;
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   HOBBIES
+   ========================================================================== */
+.hobbies-text {
+  font-size: 7.8pt;
+  color: #000000;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   PAGE BREAK & PRINT STYLES
+   ========================================================================== */
+.page-break {
+  page-break-before: always;
+  break-before: page;
+}
+
+@media print {
+  body {
+    background-color: transparent;
+  }
+  .no-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

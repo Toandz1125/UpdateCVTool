@@ -1,0 +1,23 @@
+{
+  "name": "updatecv",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cong cu dong bo CV len cac nen tang tuyen dung",
+  "scripts": {
+    "ui": "node src/cli.mjs ui",
+    "start": "node src/cli.mjs ui",
+    "build": "node src/cli.mjs build",
+    "build:pdf": "node src/cli.mjs build:pdf",
+    "build:github": "node src/cli.mjs build:github",
+    "sync:github": "node src/cli.mjs sync:github",
+    "sync:topcv": "node src/cli.mjs sync:topcv",
+    "diff": "node src/cli.mjs diff"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  },
+  "dependencies": {
+    "js-yaml": "^5.4.1"
+  }
+}

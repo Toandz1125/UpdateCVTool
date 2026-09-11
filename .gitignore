@@ -1,0 +1,15 @@
+node_modules/
+
+# Hồ sơ trình duyệt: chứa cookie phiên đăng nhập LinkedIn — không bao giờ commit
+.browser-profile/
+
+# File capture: JSONL đã che header nhạy cảm, nhưng HAR thì CHƯA — giữ ngoài git cho chắc
+captures/
+
+# Bản sao lưu resume.yaml do dashboard tạo tự động (xoay vòng 10 bản)
+data/backups/
+
+# Sản phẩm trung gian của build (sinh lại được bằng npm run build)
+output/preview.html
+output/cv-style.css
+output/*.png
