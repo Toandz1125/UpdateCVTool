@@ -96,10 +96,18 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Cột ngày (`.item-header`) | `151.3mm 1fr` | Bản gốc căn **trái** cột ngày tại x≈156.5mm trên trang, KHÔNG đẩy sát lề phải |
 | Tiêu đề giải thưởng | không in đậm | Education/project thì in đậm, riêng award thì không |
 | Nhãn "Role:" | không in đậm | |
+| Chữ đậm | `text-shadow` (đậm giả) | Bản gốc chỉ nhúng 1 face regular; dùng face Bold thật làm chữ rộng hơn 6.7%. **Không dùng `-webkit-text-stroke`** — Chromium xuất thành font Type3 và text trích ra bị nhân đôi ký tự (`CCAARREEEERR`), phá khả năng đọc của ATS |
+| Chữ nghiêng | `transform: skewX(-12deg)` | Bản gốc cũng không nhúng face Italic |
+| `--faux-bold` | `0.026em` | Cho bề rộng 32.17mm và mật độ nét 39.9%, khớp bản gốc (32.17mm / 39.4%) |
 
 Sai số hiện tại so với bản gốc (đo vị trí 8 đường kẻ tiêu đề mục, raster 200dpi):
-7/8 mốc lệch ≤ 0.2mm, riêng PROJECTS lệch 1.5mm và SKILLS lệch 2.4mm. Trang 2 bắt
-đầu đúng tại "Backend Development" như bản gốc.
+6/8 mốc lệch ≤ 0.7mm, riêng PROJECTS lệch 1.5mm và SKILLS lệch 2.1mm. Trang 2 bắt
+đầu đúng tại "Backend Development" như bản gốc. File PDF sinh ra chỉ nhúng đúng
+một face `TimesNewRomanPSMT`, giống hệt bản gốc.
+
+**Sau mỗi lần đổi CSS liên quan tới chữ đậm/nghiêng, phải kiểm tra lại text trích
+xuất được:** `pdftotext output/Mai-The-Toan-CV.pdf -` — nếu thấy ký tự bị nhân đôi
+thì cách làm đậm đó đang phá CV về mặt ATS, phải đổi cách khác.
 
 **Cảnh báo khi sửa spacing:** vị trí đường kẻ SKILLS phải ở ≤ 286.5mm, nếu không
 hàng "Programming Languages" bị đẩy sang trang 2 và lệch hẳn so với bản gốc. Chỉ

@@ -31,7 +31,7 @@ body {
    ========================================================================== */
 .cv-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 60.5px;
 }
 
 .cv-name {
@@ -39,7 +39,6 @@ body {
   font-weight: 700;
   color: #000000;
   margin-bottom: 1px;
-  letter-spacing: 0.2px;
 }
 
 .cv-title {
@@ -106,7 +105,7 @@ body {
   color: #000000;
   text-align: left;
   line-height: 1.34;
-  margin-bottom: 34px;
+  margin-bottom: 34.4px;
 }
 
 /* ==========================================================================
@@ -114,7 +113,7 @@ body {
    ========================================================================== */
 .edu-item {
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 22px;
+  padding-bottom: 22.4px;
   margin-bottom: 5px;
 }
 
@@ -154,7 +153,7 @@ body {
    RESEARCH & PUBLICATIONS
    ========================================================================== */
 .research-item {
-  margin-bottom: 15px;
+  margin-bottom: 15.8px;
   font-size: 7.8pt;
   line-height: 1.34;
 }
@@ -169,8 +168,13 @@ body {
   font-weight: 700;
 }
 
+/* Bản gốc cũng không nhúng face Italic — chữ nghiêng là do nghiêng cơ học
+   chính face regular. Dùng skewX thay font-style để không kéo thêm face
+   TimesNewRomanPS-ItalicMT vào file (chữ vẫn trích xuất được bình thường). */
 .pub-title {
-  font-style: italic;
+  font-style: normal;
+  transform: skewX(-12deg);
+  transform-origin: 0 100%;
   margin: 1px 0;
 }
 
@@ -205,7 +209,7 @@ body {
    ========================================================================== */
 .project-item {
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 14px;
+  padding-bottom: 14.6px;
   margin-bottom: 16px;
 }
 
@@ -287,6 +291,7 @@ body {
 
 .award-item .item-title {
   font-weight: 400;
+  text-shadow: none;
 }
 
 .simple-list {
@@ -338,4 +343,26 @@ body {
     page-break-inside: avoid;
     break-inside: avoid;
   }
+}
+
+/* ==========================================================================
+   ĐẬM GIẢ LẬP — phải đặt cuối file để thắng các rule font-weight:700 ở trên
+   ========================================================================== */
+/* Bản CV gốc chỉ nhúng đúng một face TimesNewRomanPSMT — phần chữ đậm là do
+   trình kết xuất tô dày nét trên chính face regular đó, không phải face Bold.
+   Dùng face Bold thật sẽ làm chữ rộng hơn khoảng 6.7% và lệch bố cục, nên ở đây
+   tái lập cách làm của bản gốc: giữ font-weight 400 và tô viền bằng text-stroke.
+   Giá trị theo em để tự co giãn theo từng cỡ chữ. */
+:root {
+  --faux-bold: 0.026em;
+}
+
+.cv-name,
+.section-title,
+.item-title,
+.project-sub,
+.meta-label,
+.pub-author-first {
+  font-weight: 400;
+  text-shadow: var(--faux-bold) 0 0 currentColor, calc(-1 * var(--faux-bold)) 0 0 currentColor;
 }
