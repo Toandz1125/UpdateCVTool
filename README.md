@@ -86,7 +86,7 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 
 | Thông số | Giá trị | Ghi chú |
 |---|---|---|
-| Lề trang (`@page`) | `4mm 5mm 0.5mm 5mm` | Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng |
+| Lề trang (`@page`) | `4mm 5mm 0mm 5mm` | Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng |
 | Cỡ chữ body | `7.8pt` | Để 8.8pt thì giá trị cột SKILLS bị xuống dòng, lệch hẳn nhịp trang |
 | Căn lề đoạn văn | `left` | Bản gốc căn trái, KHÔNG justify |
 | Cỡ tên | `14.4pt` | |
@@ -99,6 +99,8 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Chữ đậm | face Bold thật (`font-weight: 700`) | Xem mục "Chữ đậm" bên dưới |
 | Chữ nghiêng | `transform: skewX(-12deg)` | Bản gốc không nhúng face Italic |
 | Lưới SKILLS | `margin-top: -5px` | Để hàng skill đầu tiên vừa đủ nằm lại cuối trang 1 |
+| Khoảng cách trong header | tên `margin-bottom: 9.2px`, chức danh `13px`, header `45.3px` | Bản gốc giãn đều 4.78mm giữa tên–chức danh và chức danh–liên hệ, rồi 11.68mm trước mục đầu tiên. Đừng dồn hết vào `margin-bottom` của header |
+| Icon liên hệ | `14px` | Khớp chiều cao glyph FontAwesome 10.5pt của bản gốc |
 | Kẻ ngăn hàng SKILLS | `border-top` ở hàng SAU | Không dùng `border-bottom`: hàng cuối trang 1 sẽ sinh nét thừa mà bản gốc không có |
 
 Sai số hiện tại so với bản gốc (đo vị trí 8 đường kẻ tiêu đề mục, raster 200dpi):

@@ -2,7 +2,7 @@
    2.6mm dưới). Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng. */
 @page {
   size: A4 portrait;
-  margin: 4mm 5mm 0.5mm 5mm;
+  margin: 4mm 5mm 0mm 5mm;
 }
 
 * {
@@ -31,21 +31,21 @@ body {
    ========================================================================== */
 .cv-header {
   text-align: center;
-  margin-bottom: 60.5px;
+  margin-bottom: 45.3px;
 }
 
 .cv-name {
   font-size: 14.4pt;
   font-weight: 700;
   color: #000000;
-  margin-bottom: 1px;
+  margin-bottom: 9.2px;
 }
 
 .cv-title {
   font-size: 9.6pt;
   font-weight: 400;
   color: #000000;
-  margin-bottom: 6px;
+  margin-bottom: 13px;
 }
 
 .cv-contact {
@@ -70,8 +70,8 @@ body {
 }
 
 .contact-icon {
-  width: 11px;
-  height: 11px;
+  width: 14px;
+  height: 14px;
   fill: currentColor;
   display: inline-block;
   vertical-align: middle;
