@@ -88,9 +88,10 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 |---|---|---|
 | Lề trang (`@page`) | `4mm 5mm 0.5mm 5mm` | Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng |
 | Cỡ chữ body | `7.8pt` | Để 8.8pt thì giá trị cột SKILLS bị xuống dòng, lệch hẳn nhịp trang |
+| Căn lề đoạn văn | `left` | Bản gốc căn trái, KHÔNG justify |
 | Cỡ tên | `14.4pt` | |
 | Phụ đề dưới tên | `9.6pt` | |
-| Tiêu đề mục | `10.5pt` | |
+| Tiêu đề mục | `9.6pt` | Cùng cỡ với dòng "Backend Developer"; đừng để 10.5pt | |
 | Cột nhãn SKILLS | `200px` (≈51.5mm) | Đo từ bản gốc: giá trị bắt đầu ở 56.7mm tính từ mép trái |
 | Cột ngày (`.item-header`) | `151.3mm 1fr` | Bản gốc căn **trái** cột ngày tại x≈156.5mm trên trang, KHÔNG đẩy sát lề phải |
 | Tiêu đề giải thưởng | không in đậm | Education/project thì in đậm, riêng award thì không |

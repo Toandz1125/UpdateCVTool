@@ -85,14 +85,16 @@ body {
   margin-bottom: 12px;
 }
 
+/* Tiêu đề mục ở bản gốc là 9.6pt (cùng cỡ với dòng "Backend Developer").
+   padding-bottom tăng đúng phần chiều cao chữ bị hụt (1.6px) để đường kẻ
+   và tổng chiều cao khối giữ nguyên vị trí cũ. */
 .section-title {
-  font-size: 10.5pt;
+  font-size: 9.6pt;
   font-weight: 700;
   color: #000000;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
   border-bottom: 2px solid #000000;
-  padding-bottom: 1.5px;
+  padding-bottom: 3.1px;
   margin-bottom: 5px;
 }
 
@@ -102,7 +104,7 @@ body {
 .objective-text {
   font-size: 7.8pt;
   color: #000000;
-  text-align: justify;
+  text-align: left;
   line-height: 1.34;
   margin-bottom: 34px;
 }
@@ -195,7 +197,7 @@ body {
 
 .pub-detail {
   margin-top: 12px;
-  text-align: justify;
+  text-align: left;
 }
 
 /* ==========================================================================
@@ -221,7 +223,7 @@ body {
   margin: 1px 0;
   font-size: 7.8pt;
   color: #000000;
-  text-align: justify;
+  text-align: left;
 }
 
 .bullet-points li {
