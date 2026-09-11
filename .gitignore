@@ -22,3 +22,7 @@ __pycache__/
 
 # File đo đạc tạm thời khi đối chiếu với bản CV gốc
 _measure.mjs
+
+# Bản PDF do trình xem trong dashboard tải về gốc repo khi chạy thử;
+# bản thật nằm ở output/
+/Mai-The-Toan-CV.pdf
