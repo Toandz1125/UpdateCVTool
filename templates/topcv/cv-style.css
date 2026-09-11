@@ -2,7 +2,7 @@
    2.6mm dưới). Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng. */
 @page {
   size: A4 portrait;
-  margin: 2.3mm 5mm 0mm 5mm;
+  margin: 2.3mm 5.29mm 0mm 5.29mm;
 }
 
 * {
@@ -24,6 +24,22 @@ body {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
+  /* Bản gốc thụt chữ vào 4px so với đường kẻ ngang (chữ 6.40mm, kẻ 5.29mm).
+     Các phần tử mang đường kẻ được kéo ngược ra bằng .bleed bên dưới. */
+  padding: 0 4px;
+}
+
+/* Kéo đường kẻ ra sát mép vùng nội dung, bù lại 4px padding của khung ngoài */
+.section-title,
+.edu-item,
+.project-item,
+.award-item,
+.award-header,
+.simple-list-item {
+  margin-left: -4px;
+  margin-right: -4px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 /* ==========================================================================
@@ -31,22 +47,22 @@ body {
    ========================================================================== */
 .cv-header {
   text-align: center;
-  margin-top: 4.3px;
-  margin-bottom: 42.4px;
+  margin-top: 5.3px;
+  margin-bottom: 39.3px;
 }
 
 .cv-name {
   font-size: 14.4pt;
   font-weight: 700;
   color: #000000;
-  margin-bottom: 7.0px;
+  margin-bottom: 6.0px;
 }
 
 .cv-title {
   font-size: 9.6pt;
   font-weight: 400;
   color: #000000;
-  margin-bottom: 14.9px;
+  margin-bottom: 16.0px;
 }
 
 .cv-contact {
@@ -54,7 +70,9 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
+  /* 10px chứ không phải 14px: icon SVG ở đây hẹp hơn glyph FontAwesome của bản
+     gốc, nên phải bớt khoảng cách để cả hàng rộng đúng 126.3mm như bản gốc. */
+  gap: 10px;
   font-size: 7.8pt;
   color: #000000;
 }
@@ -93,9 +111,9 @@ body {
   font-weight: 700;
   color: #000000;
   text-transform: uppercase;
-  border-bottom: 2px solid #000000;
-  padding-bottom: 3.1px;
-  margin-bottom: 6.6px;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 2.1px;
+  margin-bottom: 8.6px;
 }
 
 /* ==========================================================================
@@ -106,7 +124,7 @@ body {
   color: #000000;
   text-align: left;
   line-height: 1.43;
-  margin-top: 17px;
+  margin-top: 18px;
   margin-bottom: 19.9px;
 }
 
@@ -114,16 +132,16 @@ body {
    EDUCATION (With light gray bottom divider)
    ========================================================================== */
 .edu-item {
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 11.8px;
-  margin-bottom: 5px;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 6.8px;
+  margin-bottom: 17px;
 }
 
 /* Bản gốc căn TRÁI cột ngày tại một mốc cố định (x≈156.5mm trên trang, tức
    151.3mm tính từ mép vùng nội dung), không phải đẩy sát lề phải. */
 .item-header {
   display: grid;
-  grid-template-columns: 151.3mm 1fr;
+  grid-template-columns: 149.5mm 1fr;
   align-items: baseline;
   font-size: 7.8pt;
 }
@@ -137,6 +155,9 @@ body {
   font-size: 7.8pt;
   color: #000000;
   font-weight: 400;
+  /* Bản gốc để khoảng trắng rộng 2.61mm quanh dấu gạch nối, gấp ~3.8 lần
+     dấu cách thường, nên phải nới thêm bằng word-spacing. */
+  word-spacing: 6px;
 }
 
 .item-subtitle {
@@ -177,6 +198,10 @@ body {
   font-style: normal;
   transform: skewX(-12deg);
   transform-origin: 0 100%;
+  /* Bắt buộc: nếu khối rộng hết dòng, phần nghiêng tràn ra ~3px và Chromium
+     thu nhỏ TOÀN BỘ trang ~0.5% để vừa giấy, làm mọi cỡ chữ bé đi. */
+  width: fit-content;
+  max-width: 100%;
   margin: 1px 0;
 }
 
@@ -187,7 +212,6 @@ body {
 /* Bản gốc để nhãn "Role:" chữ thường, không in đậm */
 .pub-role-label {
   font-size: 7.8pt;
-  margin-top: 2px;
   font-weight: 400;
 }
 
@@ -210,7 +234,7 @@ body {
    PROJECTS (With light gray divider between items, bullets for tech & github)
    ========================================================================== */
 .project-item {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #eeeeee;
   padding-bottom: 4px;
   margin-bottom: 9.5px;
 }
@@ -225,6 +249,10 @@ body {
 }
 
 .bullet-points {
+  /* Không dùng marker mặc định: Chromium vẽ một hình tròn rộng 0.80mm và đặt
+     lệch trái 1.66mm so với bản gốc. Bản gốc dùng đúng ký tự "•" của Times
+     (rộng 0.68mm), nên vẽ lại bằng ::before để đặt được chính xác. */
+  list-style: none;
   padding-left: 16px;
   margin: 4.1px 0 1px 0;
   font-size: 7.8pt;
@@ -233,12 +261,20 @@ body {
 }
 
 .bullet-points li {
+  position: relative;
   margin-bottom: 0.5px;
   line-height: 1.43;
 }
 
+.bullet-points li::before {
+  content: "•";
+  position: absolute;
+  left: -7.05px;
+}
+
+/* Ban goc de nhan nay chu thuong; chi ten du an va dong phu moi in dam */
 .meta-label {
-  font-weight: 700;
+  font-weight: 400;
   color: #000000;
 }
 
@@ -253,10 +289,14 @@ body {
 .skills-grid {
   display: flex;
   flex-direction: column;
-  /* Kéo lên đúng phần margin-bottom của tiêu đề mục: nhờ vậy hàng skill đầu
-     tiên vừa đủ nằm lại trang 1 (Chromium không cắt đôi được hàng grid), và
-     khoảng cách từ nét kẻ SKILLS tới dòng chữ cũng sát bản gốc hơn. */
-  margin-top: -5px;
+  /* Kéo lên để hàng skill đầu tiên vừa đủ nằm lại trang 1. Ngưỡng đo được là
+     -7px: từ -6px trở lên, Chromium đẩy nguyên hàng sang trang 2 và mọi thứ ở
+     trang 2 tụt xuống ~8mm. Lấy -8px cho hàng này lệch đều với phần còn lại
+     của trang 1 (đang cao hơn bản gốc ~0.38mm). */
+  margin-top: -8px;
+  /* Hàng cuối chỉ để lại padding 7.4px; cộng margin 12px của .cv-section vẫn
+     hụt 5px so với bản gốc, nên khai báo riêng ở đây (gộp margin với section). */
+  margin-bottom: 17px;
 }
 
 /* Đường kẻ đặt ở CẠNH TRÊN của hàng kế tiếp, không phải cạnh dưới hàng này.
@@ -264,19 +304,22 @@ body {
    đúng như bản gốc. Vị trí nét trên giấy không đổi so với cách cũ. */
 .skill-row {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 49.9mm 1fr;
   padding: 7.4px 0;
   font-size: 7.8pt;
   line-height: 1.43;
   align-items: baseline;
-  /* Buộc cả hàng đi liền khối: nếu không, nét ngăn (cao 1px) lọt vừa chỗ trống
-     cuối trang 1 và bị bỏ lại đó, trong khi phần chữ của hàng sang trang 2. */
-  break-inside: avoid;
-  page-break-inside: avoid;
 }
 
+/* Chỉ hàng CÓ nét ngăn mới buộc đi liền khối: không có ràng buộc này thì nét
+   ngăn (cao 1px) lọt vừa chỗ trống cuối trang 1 và bị bỏ lại đó, còn chữ sang
+   trang 2. Hàng ĐẦU thì ngược lại - phải cho phép tách, để phần đệm dưới của nó
+   tràn sang trang 2 giống bản gốc; nếu buộc liền khối, cả hàng bị đẩy sang trang
+   sau và mọi thứ ở trang 2 tụt xuống ~2mm. */
 .skill-row + .skill-row {
   padding-top: 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 /* Nét ngăn hàng là phần tử nội dung, không phải border: border của hàng mở đầu
@@ -284,8 +327,8 @@ body {
 .skill-sep {
   grid-column: 1 / -1;
   height: 1px;
-  background: #e0e0e0;
-  margin-bottom: 7.4px;
+  background: #eeeeee;
+  margin: 0 -4px 7.4px;
 }
 
 .skill-name {
@@ -303,13 +346,13 @@ body {
 /* Bản gốc coi dòng tiêu đề và dòng mô tả là hai hàng riêng, mỗi hàng có đường kẻ
    xám của nó; và tiêu đề giải thưởng để chữ thường (khác education/project). */
 .award-item {
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 8px;
-  margin-bottom: 14.7px;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 6px;
+  margin-bottom: 16.7px;
 }
 
 .award-header {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #eeeeee;
   padding-bottom: 8px;
   margin-bottom: 8px;
 }
@@ -321,13 +364,16 @@ body {
 .simple-list {
   list-style: none;
   font-size: 7.8pt;
+  /* Giống .skills-grid: khoảng cách sau mục cuối phải rộng hơn khoảng cách
+     giữa hai mục, nên không thể để .simple-list-item tự lo. */
+  margin-bottom: 17px;
 }
 
 .simple-list-item {
   display: grid;
-  grid-template-columns: 151.3mm 1fr;
+  grid-template-columns: 149.5mm 1fr;
   align-items: baseline;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #eeeeee;
   padding-bottom: 6.9px;
   margin-bottom: 9px;
 }
@@ -382,7 +428,9 @@ body {
     max-width: 210mm;
     min-height: 297mm;
     margin: 0 auto;
-    padding: 4mm 5mm 0.5mm 5mm;
+    /* 5.29mm là lề trang khi in, cộng thêm 4px thụt chữ của .cv-container
+       (ở bản in phần 5.29mm do @page lo, trên màn hình phải tự cộng vào) */
+    padding: 4mm calc(5.29mm + 4px) 0.5mm calc(5.29mm + 4px);
     background: #ffffff;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }

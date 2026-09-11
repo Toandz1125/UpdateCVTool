@@ -86,67 +86,82 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 
 | Thông số | Giá trị | Ghi chú |
 |---|---|---|
-| Lề trang (`@page`) | `2.3mm 5mm 0mm 5mm` | Lề rộng hơn sẽ làm hẹp vùng chữ và đổi toàn bộ điểm ngắt dòng |
-| Giãn dòng (`line-height`) | `1.43` | Đo từ bản gốc: hai dòng đoạn objective cách nhau 3.94mm. Để 1.34 thì chữ trong mục bị nén và phải bù bằng khoảng hở lớn giữa các khối — sai bố cục |
+| Lề trang (`@page`) | `2.3mm 5.29mm 0mm 5.29mm` | Đường kẻ ngang của bản gốc chạy từ 5.29mm đến 204.87mm |
+| Thụt chữ so với đường kẻ | `.cv-container { padding: 0 4px }` | Bản gốc đặt chữ ở 6.40mm còn đường kẻ ở 5.29mm. Các phần tử mang đường kẻ được kéo ngược ra bằng `margin: 0 -4px; padding: 0 4px` |
+| Độ dày kẻ đen tiêu đề mục | `1px` | **Không phải 2px.** Bản gốc đo được 0.26mm |
+| Màu kẻ xám | `#eeeeee` | Không phải `#e0e0e0` — bản gốc đo được RGB 0.933 |
+| Giãn dòng (`line-height`) | `1.43` | Để 1.34 thì chữ trong mục bị nén và phải bù bằng khoảng hở lớn giữa các khối — sai bố cục |
 | Bước hàng SKILLS | `padding: 7.4px 0` | Bước hàng bản gốc 8.06mm |
-| Cỡ chữ body | `7.8pt` | Để 8.8pt thì giá trị cột SKILLS bị xuống dòng, lệch hẳn nhịp trang |
+| Cỡ chữ body | `7.8pt` (= 10.4px) | Trùng đúng giá trị `Tf` của bản gốc |
 | Căn lề đoạn văn | `left` | Bản gốc căn trái, KHÔNG justify |
-| Cỡ tên | `14.4pt` | |
-| Phụ đề dưới tên | `9.6pt` | |
-| Tiêu đề mục | `9.6pt` | Cùng cỡ với dòng "Backend Developer"; đừng để 10.5pt |
-| Cột nhãn SKILLS | `200px` (≈51.5mm) | Đo từ bản gốc: giá trị bắt đầu ở 56.7mm tính từ mép trái |
-| Cột ngày (`.item-header`) | `151.3mm 1fr` | Bản gốc căn **trái** cột ngày tại x≈156.5mm trên trang, KHÔNG đẩy sát lề phải |
-| Tiêu đề giải thưởng | không in đậm | Education/project thì in đậm, riêng award thì không |
-| Nhãn "Role:" | không in đậm | |
+| Cỡ tên / phụ đề / tiêu đề mục | `14.4pt` / `9.6pt` / `9.6pt` | = 19.2px / 12.8px / 12.8px, trùng bản gốc |
+| Cột nhãn SKILLS | `49.9mm` | Giá trị bắt đầu ở 56.3mm trên trang |
+| Cột ngày | `149.5mm 1fr` | Bản gốc căn **trái** cột ngày tại x≈156.0mm, KHÔNG đẩy sát lề phải |
+| Giãn chữ cột ngày | `word-spacing: 6px` | Bản gốc để khoảng trắng 2.61mm quanh dấu gạch nối, gấp ~3.8 lần dấu cách thường |
+| Khoảng cách các mục liên hệ | `gap: 10px` | Icon SVG ở đây hẹp hơn glyph FontAwesome của bản gốc nên phải bớt 4px để cả hàng rộng đúng 126.3mm |
+| Dấu chấm đầu dòng | `::before { content: "•"; left: -7.05px }` | **Không dùng marker mặc định**: Chromium vẽ hình tròn rộng 0.80mm đặt lệch trái 1.66mm. Bản gốc dùng đúng ký tự "•" của Times, rộng 0.68mm |
+| Nhãn "Tech Stack:" / "Github:" | **không in đậm** | Bản gốc chỉ in đậm: tên, 8 tiêu đề mục, tên trường, tác giả đầu, 4 tên dự án, 4 dòng phụ dự án — đúng 19 chỗ, không hơn |
+| Tiêu đề giải thưởng, nhãn "Role:" | không in đậm | |
 | Chữ đậm | face Bold thật (`font-weight: 700`) | Xem mục "Chữ đậm" bên dưới |
-| Chữ nghiêng | `transform: skewX(-12deg)` | Bản gốc không nhúng face Italic |
-| Lưới SKILLS | `margin-top: -5px` | Để hàng skill đầu tiên vừa đủ nằm lại cuối trang 1 |
-| Khoảng cách trong header | tên `margin-bottom: 9.2px`, chức danh `13px`, header `45.3px` | Bản gốc giãn đều 4.78mm giữa tên–chức danh và chức danh–liên hệ, rồi 11.68mm trước mục đầu tiên. Đừng dồn hết vào `margin-bottom` của header |
-| Icon liên hệ | `14px` | Khớp chiều cao glyph FontAwesome 10.5pt của bản gốc |
-| Kẻ ngăn hàng SKILLS | phần tử `<i class="skill-sep">` trong hàng | **Không dùng `border`**: border của hàng mở đầu một trang mới bị Chromium bỏ qua, nên nét ở đầu trang 2 sẽ mất. Phần tử nội dung thì luôn được vẽ |
-| `.skill-row` | `break-inside: avoid` | Thiếu dòng này thì nét ngăn (cao 1px) lọt vừa chỗ trống cuối trang 1 và bị bỏ lại đó, còn chữ của hàng thì sang trang 2 |
+| Chữ nghiêng | `transform: skewX(-12deg)` + `width: fit-content` | Bản gốc không nhúng face Italic. **Bắt buộc có `width: fit-content`** — xem mục dưới |
+| Lưới SKILLS | `margin-top: -8px`, `margin-bottom: 17px` | -8px để hàng skill đầu vừa đủ nằm lại trang 1 (ngưỡng đo được là -7px); 17px vì khoảng cách sau hàng cuối rộng hơn khoảng cách giữa hai hàng |
+| Khoảng sau danh sách chứng chỉ | `.simple-list { margin-bottom: 17px }` | Cùng lý do với lưới SKILLS: `.simple-list-item` tự lo thì hụt 5px |
+| Kẻ ngăn hàng SKILLS | phần tử `<i class="skill-sep">` trong hàng | **Không dùng `border`**: border của hàng mở đầu một trang mới bị Chromium bỏ qua, nên nét ở đầu trang 2 sẽ mất |
+| `break-inside: avoid` | chỉ đặt cho `.skill-row + .skill-row` | Hàng CÓ nét ngăn phải đi liền khối, nếu không nét ngăn (cao 1px) lọt vừa chỗ trống cuối trang 1 và bị bỏ lại đó. Hàng ĐẦU thì ngược lại — phải cho phép tách để phần đệm dưới tràn sang trang 2 như bản gốc; buộc liền khối là cả hàng bị đẩy sang trang sau và trang 2 tụt xuống ~8mm |
 
-Sai số hiện tại (so từng dòng chữ một, raster 400dpi):
+### Bẫy: một phần tử tràn 3px làm co nhỏ CẢ trang
 
-| | Số dòng | Lệch trung bình | Lệch lớn nhất |
-|---|---|---|---|
-| Trang 1 | 52 | **0.22mm** | **0.64mm** (100% dưới 1mm) |
-| Trang 2 | 18 | 2.68mm | 8.45mm |
+`.pub-title` dùng `transform: skewX(-12deg)`. Nếu khối rộng hết dòng, góc trên
+bên phải của phần nghiêng vượt mép giấy ~3.16px. Chromium khi đó **thu nhỏ toàn
+bộ trang 0.46% để vừa giấy** — mọi cỡ chữ bé đi 0.5%, mọi toạ độ lệch dần tới
+gần 1mm ở cuối trang. Triệu chứng khó nhận ra vì không có lỗi nào được báo.
 
-Trang 1 khớp từng dòng. Trang 2 lệch nhiều hơn **vì dữ liệu khác bản gốc**:
-`skills.tools` trong `data/resume.yaml` có thêm 7 mục (Windows Terminal,
+Cách phát hiện: mở `output/preview.html` bằng Playwright ở chế độ print rồi so
+`document.documentElement.scrollWidth` với `clientWidth` — bằng nhau là sạch.
+Cách chữa: `width: fit-content` cho phần tử có `transform`.
+
+Sai số hiện tại (so từng dòng chữ, toạ độ lấy từ hộp bao ký tự trong PDF):
+
+| | Lệch ngang trung bình | Lệch ngang lớn nhất | Lệch dọc trung bình | Lệch dọc lớn nhất |
+|---|---|---|---|---|
+| Cả 2 trang (62 dòng) | **0.04mm** | **0.84mm** | **0.38mm** | **0.89mm** |
+
+Đo với `skills.tools` rút còn 1 dòng để loại ảnh hưởng của dữ liệu. Với dữ liệu
+thật, `skills.tools` trong `data/resume.yaml` có thêm 7 mục (Windows Terminal,
 PythonAnywhere, Firebase, Cloudflare, Google Cloud, Arduino, Canva) nên hàng
-Tools xuống 2 dòng thay vì 1, đẩy HONORS/CERTIFICATES/HOBBIES xuống theo. Đây
-không phải lỗi template — bỏ bớt các mục đó đi thì trang 2 cũng khớp.
+Tools xuống 2 dòng thay vì 1, đẩy HONORS/CERTIFICATES/HOBBIES xuống ~2.4mm. Đây
+không phải lỗi template.
 
 Trang 1 kết thúc bằng hàng "Programming Languages" và trang 2 bắt đầu bằng
 "Backend Development", đúng như bản gốc.
 
 **Cách tự kiểm tra sau khi sửa CSS:** so vị trí từng dòng giữa hai file PDF bằng
-cách raster hoá rồi dò các dải có mực — đừng chỉ nhìn vị trí đường kẻ tiêu đề
-mục, vì đường kẻ có thể khớp trong khi chữ bên trong mục bị nén.
+hộp bao ký tự (`FPDFText_GetCharBox`) chứ đừng chỉ nhìn vị trí đường kẻ tiêu đề
+mục — đường kẻ có thể khớp trong khi chữ bên trong mục bị nén. Khi ước lượng
+đường chân chữ, gom cụm đáy hộp bao rồi lấy cụm đông nhất; lấy trung bình sẽ bị
+các chữ có nét thòng xuống (g, p, y) kéo lệch ±0.26mm và tạo ra lỗi giả.
 
 Khối `@media screen` ở cuối `cv-style.css` ép khung xem trước trên dashboard về
-đúng khổ A4 (210mm, vùng chữ 200mm). Không có nó thì preview giãn hết bề ngang
-iframe và ngắt dòng khác hẳn file PDF. Khối này không ảnh hưởng bản in vì
-Playwright xuất PDF ở chế độ print media.
+đúng khổ A4 (210mm), kể cả 4px thụt chữ. Không có nó thì preview giãn hết bề
+ngang iframe và ngắt dòng khác hẳn file PDF.
 
 ### Chữ đậm — đã thử 3 cách, chọn cách ít dở nhất
 
-Bản gốc chỉ nhúng một face `TimesNewRomanPSMT`, chữ đậm là do trình kết xuất tô
-dày nét trên chính face đó. Không tái lập được trọn vẹn bằng CSS:
+Bản gốc **không nhúng face Bold nào** — cả 7 subset đều là `TimesNewRomanPSMT`
+với `StemV=61.03`; chữ đậm là do trình kết xuất tô dày nét trên chính face đó.
+Không tái lập được trọn vẹn bằng CSS:
 
-| Cách | Nét chữ | Bề rộng | ATS đọc được |
+| Cách | Nét chữ so với gốc | Bề rộng | ATS đọc được |
 |---|---|---|---|
-| `font-weight: 700` (đang dùng) | sắc gọn | rộng hơn 6.7% | có |
-| `-webkit-text-stroke` | sắc gọn | khớp | **KHÔNG** |
+| `font-weight: 700` (đang dùng) | mảnh hơn 8–12% | rộng hơn ~6% | có |
+| `-webkit-text-stroke: 0.16px` trên face Regular | mảnh hơn 24–28% | khớp chính xác | **KHÔNG** |
 | `text-shadow` | nhoè, có bóng đôi | khớp | có |
 
-`-webkit-text-stroke` khiến Chromium xuất chữ đậm thành font **Type3** và vẽ hai
-lần, text trích ra bị nhân đôi ký tự (`CCAARREEEERR OOBBJJEECCTTIIVVEE`) — hệ
-thống ATS sẽ đọc CV thành rác. `text-shadow` khớp bề rộng nhưng rải mực thành
-vệt mờ, nhìn nhạt hơn bản gốc dù cùng lượng mực. Face Bold thật giữ được nét sắc,
-đổi lại rộng hơn 6.7% — đây là đánh đổi được chọn.
+`-webkit-text-stroke` khiến Chromium vẽ chữ hai lần, text trích ra bị nhân đôi
+ký tự (`CCAARREEEERR OOBBJJEECCTTIIVVEE`) — hệ thống ATS sẽ đọc CV thành rác.
+Đã thử lại trên Chromium hiện tại: vẫn còn lỗi này. Và nó cũng **nhạt hơn** face
+Bold thật, nên không được lợi gì về độ đậm. Face Bold thật là phương án gần bản
+gốc nhất trong cả ba.
 
 **Sau mỗi lần đổi CSS liên quan tới chữ đậm/nghiêng, phải kiểm tra lại text trích
 xuất được:** `pdftotext output/Mai-The-Toan-CV.pdf -` — nếu thấy ký tự bị nhân đôi
