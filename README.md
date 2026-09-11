@@ -102,7 +102,7 @@ Các giá trị dưới đây **đo từ bản gốc**, đừng đổi nếu kh�
 | Dấu chấm đầu dòng | `::before { content: "•"; left: -7.05px }` | **Không dùng marker mặc định**: Chromium vẽ hình tròn rộng 0.80mm đặt lệch trái 1.66mm. Bản gốc dùng đúng ký tự "•" của Times, rộng 0.68mm |
 | Nhãn "Tech Stack:" / "Github:" | **không in đậm** | Bản gốc chỉ in đậm: tên, 8 tiêu đề mục, tên trường, tác giả đầu, 4 tên dự án, 4 dòng phụ dự án — đúng 19 chỗ, không hơn |
 | Tiêu đề giải thưởng, nhãn "Role:" | không in đậm | |
-| Chữ đậm | font Times tô đậm sẵn, dựng lúc build | **Không dùng face Bold thật** (rộng hơn ~6%), cũng không dùng `text-shadow`/`-webkit-text-stroke` (nhân bản text). Xem mục "Chữ đậm" bên dưới |
+| Chữ đậm | font Times tô đậm sẵn, dựng lúc build (0.024em, đậm hơn bản gốc ~8% theo yêu cầu) | **Không dùng face Bold thật** (rộng hơn ~6%), cũng không dùng `text-shadow`/`-webkit-text-stroke` (nhân bản text). Xem mục "Chữ đậm" bên dưới |
 | Chữ nghiêng | `transform: skewX(-12deg)` + `width: fit-content` | Bản gốc không nhúng face Italic. **Bắt buộc có `width: fit-content`** — xem mục dưới |
 | Lưới SKILLS | `margin-top: -8px`, `margin-bottom: 17px` | -8px để hàng skill đầu vừa đủ nằm lại trang 1 (ngưỡng đo được là -7px); 17px vì khoảng cách sau hàng cuối rộng hơn khoảng cách giữa hai hàng |
 | Khoảng sau danh sách chứng chỉ | `.simple-list { margin-bottom: 17px }` | Cùng lý do với lưới SKILLS: `.simple-list-item` tự lo thì hụt 5px |
@@ -176,9 +176,16 @@ Hai chi tiết phải làm đúng, nếu không sẽ hỏng ở cỡ màn hình:
 Lệnh hinting bị bỏ vì toạ độ điểm đã đổi. Không mất mát gì: bản gốc cũng không
 dùng hinting để hiển thị.
 
+Độ đậm chỉnh bằng `DEFAULT_STRENGTH` trong script đó. `0.020` khớp đúng bản
+gốc; **đang để `0.024`, đậm hơn bản gốc ~8% mực theo yêu cầu**. Từ `0.026` trở
+lên thì ruột chữ O, B, E bắt đầu bị bít ở cỡ màn hình. Đổi xong chạy lại
+`npm run build:font`. Bề rộng chữ không phụ thuộc giá trị này nên bố cục không
+xê dịch dù chỉnh bao nhiêu.
+
 | Cách | Nét chữ (600dpi) | Lượng mực (96dpi) | Bề rộng | Text trích xuất |
 |---|---|---|---|---|
-| **Nong viền 0.020em (đang dùng)** | **-1.3% … -2.6%** | **-0.3% … +1.8%** | **khớp** | **1 bản, sạch** |
+| **Nong viền 0.024em (đang dùng)** | **+6.0% … +6.4%** | **+7.4% … +9.8%** | **khớp** | **1 bản, sạch** |
+| Nong viền 0.020em (bằng đúng bản gốc) | -1.3% … -2.6% | -0.3% … +1.8% | khớp | 1 bản, sạch |
 | Chồng 16 bản sao 0.017em | -0.5% … +2.8% | **+24% … +35%** | khớp | 1 bản, sạch |
 | `font-weight: 700` (face Bold thật) | -8% … -12% | — | rộng hơn ~6% | 1 bản, sạch |
 | `text-shadow` 24 bản sao | khớp | — | khớp | **25 bản** |

@@ -26,9 +26,12 @@ from fontTools.ttLib import TTFont
 # Nguồn font: bản Times New Roman đi kèm Windows
 SRC_FONT = os.path.join(os.environ.get('WINDIR', r'C:\Windows'), 'Fonts', 'times.ttf')
 
-# Bán kính nong viền, tính theo em. 0.020 là giá trị đo khớp bản gốc: lượng mực
-# lệch +0.6% (tên), +1.8% (tiêu đề mục), -0.3% (tên trường) khi đo ở 96dpi.
-DEFAULT_STRENGTH = 0.020
+# Bán kính nong viền, tính theo em - đây là núm chỉnh độ đậm, sửa xong nhớ chạy
+# lại `npm run build:font`.
+#   0.020 khớp đúng bản gốc (mực lệch +0.6% tên, +1.8% tiêu đề mục, ở 96dpi)
+#   0.024 đang dùng: đậm hơn bản gốc ~8% mực, theo yêu cầu
+#   0.026 trở lên: ruột chữ O, B, E bắt đầu bị bít ở cỡ màn hình
+DEFAULT_STRENGTH = 0.024
 
 # Chặn gai nhọn: ở góc càng nhọn thì điểm phải dịch càng xa mới giữ được bề dày
 # nét. Không chặn thì đầu nhọn của A, V, W bắn ra thành gai dài.

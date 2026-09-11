@@ -293,7 +293,7 @@ export async function buildPdf() {
   const hasFauxBold = ensureFauxBoldFont(ROOT_DIR, OUTPUT_DIR, DATA_FILE);
   const css = fs.readFileSync(TEMPLATE_CSS, 'utf8') + (hasFauxBold ? fauxBoldCss() : '');
   console.log(hasFauxBold
-    ? '[PDF Generator] Chữ đậm: dùng font Times tô đậm sẵn (khớp bản gốc)'
+    ? '[PDF Generator] Chữ đậm: dùng font Times tô đậm sẵn'
     : '[PDF Generator] Chữ đậm: dùng face Bold thật (không dựng được font tô đậm)');
 
   fs.writeFileSync(path.join(OUTPUT_DIR, 'cv-style.css'), css, 'utf8');
