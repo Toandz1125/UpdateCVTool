@@ -79,6 +79,29 @@ projects:
 
 ---
 
+## 🧪 Bộ kiểm thử
+
+```bash
+npm test
+```
+
+Chạy 230 ca, chia 5 nhóm:
+
+| Nhóm | Nội dung |
+|---|---|
+| Hàm thuần | `validateResume` với mọi kiểu dữ liệu sai; `renderTemplate` với dữ liệu thiếu, null, số, chuỗi 20.000 ký tự, unicode, và các payload chèn mã |
+| Dựng PDF | Dựng thật qua Playwright với 8 dạng dữ liệu; 10 dạng dữ liệu hỏng phải báo lỗi mà **không** ghi đè PDF cũ; kiểm tra DOM của bản xem trước không có thẻ `script`/`img`/`style` nào bị chèn |
+| Server HTTP | MIME của từng loại file; 10 kiểu đường dẫn vượt thư mục; chặn `Host` lạ; 11 dạng payload sai cho `/api/save`; body quá 2MB; xoay vòng bản sao lưu; biên dịch hỏng phải khôi phục `resume.yaml` |
+| Font & CLI | Dựng font, không dựng lại khi không cần, tất định về hình học chữ; thiếu `times.ttf`/thiếu script phải lùi về face Bold chứ không làm hỏng build; các lệnh CLI |
+| Ca biên | Thiếu `resume.yaml`, thiếu thư mục `output/`, file có BOM/CRLF, ghi đồng thời 3 request, YAML chứa thẻ `!!js/function`, bom anchor |
+
+Bộ kiểm thử **dựng một bản sao dự án trong thư mục tạm** rồi chạy trong đó, vì
+nhiều ca phải ghi đè `data/resume.yaml` và `output/`. Dữ liệu thật không bị động
+tới. Server kiểm thử chạy ở cổng 3100 (`UPDATECV_PORT`) nên mở được song song
+với dashboard đang chạy ở cổng 3000.
+
+---
+
 ## 🎨 Khớp bố cục với bản CV gốc
 
 Template được hiệu chỉnh bám theo file `Mai-The-Toan-TopCV.vn-010626.131333.pdf`.

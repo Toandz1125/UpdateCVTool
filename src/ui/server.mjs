@@ -17,7 +17,9 @@ const DATA_FILE = path.join(ROOT_DIR, 'data', 'resume.yaml');
 const BACKUP_DIR = path.join(ROOT_DIR, 'data', 'backups');
 const PUBLIC_DIR = path.join(ROOT_DIR, 'src', 'ui', 'public');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'output');
-const PORT = 3000;
+// Cổng mặc định 3000; bộ kiểm thử đặt UPDATECV_PORT để chạy song song với
+// dashboard đang mở mà không tranh cổng
+const PORT = Number(process.env.UPDATECV_PORT) || 3000;
 // Chỉ nghe trên loopback: nếu bind 0.0.0.0 thì cả máy khác trong mạng LAN
 // cũng gọi được /api/save và /api/sync/github
 const HOST = '127.0.0.1';
@@ -54,16 +56,24 @@ function readBody(req) {
   return new Promise((resolve, reject) => {
     let body = '';
     let size = 0;
+    let vuotHan = false;
     req.on('data', (chunk) => {
+      // Đã vượt hạn thì đọc tiếp cho hết để xả, nhưng không tích luỹ nữa:
+      // bộ nhớ vẫn bị chặn mà socket không bị đập.
+      if (vuotHan) return;
       size += chunk.length;
       if (size > MAX_BODY_BYTES) {
+        vuotHan = true;
+        // KHÔNG gọi req.destroy() ở đây: đập socket thì client chỉ thấy
+        // ECONNRESET chứ không nhận được câu trả lời 400 giải thích vì sao,
+        // dashboard sẽ báo "lỗi mạng" thay vì "dữ liệu quá lớn".
         reject(new BadRequestError(`Body vượt quá ${MAX_BODY_BYTES} byte.`));
-        req.destroy();
         return;
       }
       body += chunk;
     });
     req.on('end', () => {
+      if (vuotHan) return;
       try {
         resolve(body ? JSON.parse(body) : {});
       } catch {

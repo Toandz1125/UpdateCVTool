@@ -13,7 +13,8 @@
     "build:font": "python tools/build-faux-bold-font.py output/times-faux-bold.woff2 data/resume.yaml",
     "sync:github": "node src/cli.mjs sync:github",
     "sync:topcv": "node src/cli.mjs sync:topcv",
-    "diff": "node src/cli.mjs diff"
+    "diff": "node src/cli.mjs diff",
+    "test": "node test/run.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0"
